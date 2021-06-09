@@ -14,4 +14,10 @@ class Template {
 			$this->set('title', $title);
 			return $this->CI->load->view('partials/content', $this->template_data, $return);
 		}
+
+		function pagging($view_data = array('page_total' => null, 'page' => null, 'url' => null))
+		{               
+			$this->CI =& get_instance();
+			return $this->CI->load->view('partials/page', $view_data);
+		}
 }

@@ -26,6 +26,7 @@
         <div class="col-lg-5 col-md-7">
           <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
+              <?= $this->session->flashdata('msg');?>
               <form role="form" method="POST" action="<?= base_url('auth/action_login');?>">
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
@@ -42,12 +43,6 @@
                     </div>
                     <input class="form-control" placeholder="Password" type="password" name="password" required="true" />
                   </div>
-                </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="remember">
-                  <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                  </label>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Sign in</button>

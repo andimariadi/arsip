@@ -3,24 +3,18 @@
     <div class="header-body">
       <div class="row align-items-center py-4">
         <div class="col-lg-6 col-7">
-          <h6 class="h2 text-white d-inline-block mb-0">Users</h6>
-          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-              <li class="breadcrumb-item"><a href="#">Data</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Users</li>
-            </ol>
-          </nav>
+          
         </div>
         <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral">
+          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
             <span class="ni ni-fat-add"></span>
             New
-          </a>
+          </a>');?>
+          <?= permission_export('
           <a href="#" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
-          </a>
+          </a>');?>
         </div>
       </div>
     </div>
@@ -29,6 +23,8 @@
 
 <div class="container-fluid mt--6">
   <div class="row">
+    <?= $this->session->flashdata('msg');?>
+
     <div class="col">
       <div class="card">
         <!-- Card header -->
@@ -56,76 +52,169 @@
               </tr>
             </thead>
             <tbody class="list">
+              <?php foreach ($data_users as $value) : ?>
               <tr>
                 <th scope="row">
-                  admin
+                  <?= $value['username'];?>
                 </th>
                 <td class="budget">
-                  <?= strtoupper('ANDI MARIADI');?>
+                  <?= strtoupper($value['full_name']);?>
                 </td>
                 <td>
-                  <?= strtoupper('Admin');?>
+                  <?= $value['level'];?>
                 </td>
                 <td>
-                  <?= strtoupper('true');?>
+                  <?= strtoupper($value['data_create']);?>
                 </td>
                 <td>
-                  <?= strtoupper('true');?>
+                  <?= strtoupper($value['data_read']);?>
                 </td>
                 <td>
-                  <?= strtoupper('true');?>
+                  <?= strtoupper($value['data_update']);?>
                 </td>
                 <td>
-                  <?= strtoupper('true');?>
+                  <?= strtoupper($value['data_delete']);?>
                 </td>
                 <td>
-                  <?= strtoupper('true');?>
+                  <?= strtoupper($value['data_export']);?>
                 </td>
                 <td>
-                  Users, Karyawan
+                  <?= $value['restrict'];?>
                 </td>
                 <td class="text-right">
+                  <?php if (permission_update('true') != '' || permission_delete('true') != '' || permission_administrator('true') != ''): ?>
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Reset Password</a>
-                      <a class="dropdown-item" href="#">Update</a>
-                      <a class="dropdown-item" href="#">Delete</a>
+                      <?= permission_administrator('<a class="dropdown-item" href="#">Reset Password</a>');?>
+                      <?= permission_update('<a class="dropdown-item" href="#">Update</a>');?>
+                      <?= permission_delete('<a class="dropdown-item" href="#">Delete</a>');?>
                     </div>
                   </div>
+                  <?php endif;?>
                 </td>
               </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
-        <!-- Card footer -->
-        <div class="card-footer py-4">
-          <nav aria-label="...">
-            <ul class="pagination justify-content-end mb-0">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">
-                  <i class="fas fa-angle-left"></i>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="#">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">
-                  <i class="fas fa-angle-right"></i>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <?php $this->template->pagging(
+          array(
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/users/')
+          )
+        );?>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+      <div class="modal-content">
+        <form method="POST" action="<?= base_url('create/users');?>">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Tambah User</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="text" class="form-control" placeholder="Username" name="username">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" class="form-control" placeholder="Password" name="password">
+            </div>
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
+            </div>
+
+            <div class="form-group">
+              <label>Level</label>
+              <select class="form-control" name="level">
+                <option value="administrator ">Administrator</option>
+                <option value="user">Admin</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+
+                <div class="form-group">
+                  <label>Access Create</label>
+                  <select class="form-control" name="data_create">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+                
+              </div>
+              <div class="col-6">
+
+                <div class="form-group">
+                  <label>Access Read</label>
+                  <select class="form-control" name="data_read">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+                
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+
+                <div class="form-group">
+                  <label>Access Update</label>
+                  <select class="form-control" name="data_update">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+                
+              </div>
+              <div class="col-6">
+
+                <div class="form-group">
+                  <label>Access Delete</label>
+                  <select class="form-control" name="data_delete">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Access Export</label>
+              <select class="form-control" name="data_export">
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Restrict Menu</label>
+              <select class="form-control" name="restrict">
+                <option value="true">...</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
       </div>
     </div>
   </div>

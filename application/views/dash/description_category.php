@@ -26,19 +26,18 @@
       <div class="card">
         <!-- Card header -->
         <div class="card-header border-0">
-          <h3 class="mb-0">Data Karyawan</h3>
+          <h3 class="mb-0">Data Arahan</h3>
         </div>
         <!-- Light table -->
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col" class="sort" data-sort="name">NIK</th>
-                <th scope="col" class="sort" data-sort="budget">Nama Lengkap</th>
-                <th scope="col" class="sort" data-sort="status">Jenis Kelamin</th>
-                <th scope="col">Telp</th>
-                <th scope="col" class="sort" data-sort="completion">Alamat</th>
-                <th scope="col" class="sort" data-sort="completion">Gambar</th>
+                <th scope="col">ID Sub kategory</th>
+                <th scope="col">Keterangan</th>
+                <th scope="col">Area</th>
+                <th scope="col">Karyawan</th>
+                <th scope="col">Minute</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -54,15 +53,10 @@
                   <?= ucwords('Laki-laki');?>
                 </td>
                 <td>
-                  +6281234567890
-                </td>
-                <td style="white-space: normal;">
-                  Pacific Century Place Tower Level 45 SCBD Lot 10, Jl. Jend. Sudirman No.53, RT.5/RW.3, Senayan, Kebayoran Baru, South Jakarta City, Jakarta 12190, Indonesia
+                  <?= ucwords('Laki-laki');?>
                 </td>
                 <td>
-                  <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
-                  </a>
+                  <?= ucwords('Laki-laki');?>
                 </td>
                 <td class="text-right">
                   <div class="dropdown">
@@ -79,6 +73,7 @@
             </tbody>
           </table>
         </div>
+        
         <?php $this->template->pagging(
           array(
             'page_total' => 10, 'page' => 1, 'url' => 'dash/'

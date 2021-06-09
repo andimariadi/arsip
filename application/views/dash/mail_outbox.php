@@ -26,19 +26,21 @@
       <div class="card">
         <!-- Card header -->
         <div class="card-header border-0">
-          <h3 class="mb-0">Data Karyawan</h3>
+          <h3 class="mb-0">Data Surat Keluar</h3>
         </div>
         <!-- Light table -->
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col" class="sort" data-sort="name">NIK</th>
-                <th scope="col" class="sort" data-sort="budget">Nama Lengkap</th>
-                <th scope="col" class="sort" data-sort="status">Jenis Kelamin</th>
-                <th scope="col">Telp</th>
-                <th scope="col" class="sort" data-sort="completion">Alamat</th>
-                <th scope="col" class="sort" data-sort="completion">Gambar</th>
+                <th scope="col">Kode</th>
+                <th scope="col">Nomor</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Kategory</th>
+                <th scope="col">Perihal</th>
+                <th scope="col">Jenis Surat</th>
+                <th scope="col">Institusi</th>
+                <th scope="col">Document</th>
                 <th scope="col"></th>
               </tr>
             </thead>
@@ -54,14 +56,21 @@
                   <?= ucwords('Laki-laki');?>
                 </td>
                 <td>
-                  +6281234567890
-                </td>
-                <td style="white-space: normal;">
-                  Pacific Century Place Tower Level 45 SCBD Lot 10, Jl. Jend. Sudirman No.53, RT.5/RW.3, Senayan, Kebayoran Baru, South Jakarta City, Jakarta 12190, Indonesia
+                  <?= ucwords('Laki-laki');?>
                 </td>
                 <td>
-                  <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
+                  <?= ucwords('Laki-laki');?>
+                </td>
+                <td>
+                  <?= ucwords('Laki-laki');?>
+                </td>
+                <td>
+                  <?= ucwords('Laki-laki');?>
+                </td>
+                <td>
+                  <a href="#" class="btn btn-neutral btn-sm">
+                    <span class="ni ni-cloud-download-95"></span>
+                    Download
                   </a>
                 </td>
                 <td class="text-right">
