@@ -11,4 +11,29 @@ class Dash extends CI_Controller {
 	{
 		$this->template->load('Dashboard','dash/home');
 	}
+
+	public function users()
+	{
+		$this->template->load('Users','dash/users');
+	}
+
+	public function workers()
+	{
+		$this->template->load('Karyawan','dash/workers');
+	}
+
+	public function notice()
+	{
+		$this->template->load('Pengunguman','dash/notice');
+	}
+
+	public function category()
+	{
+		$this->template->load('Pengunguman','dash/category');
+	}
+
+	public function sub_category()
+	{
+		$this->template->load('Pengunguman','dash/sub_category');
+	}
 }
