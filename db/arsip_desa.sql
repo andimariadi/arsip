@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 08, 2021 at 01:16 PM
+-- Generation Time: Jun 10, 2021 at 03:59 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -53,8 +52,7 @@ CREATE TABLE `category` (
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
-  `remark` text NOT NULL,
-  `by_user` int(10) NOT NULL
+  `remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -189,7 +187,7 @@ CREATE TABLE `subcategory` (
   `category_id` int(25) NOT NULL,
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
-  `by_user` int(10) NOT NULL
+  `remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -205,8 +203,7 @@ CREATE TABLE `type_inbox` (
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
-  `remark` text NOT NULL,
-  `by_user` int(10) NOT NULL
+  `remark` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -223,14 +220,22 @@ CREATE TABLE `users` (
   `username` varchar(25) NOT NULL,
   `password` text NOT NULL,
   `full_name` varchar(150) NOT NULL,
-  `level` int(10) NOT NULL,
+  `level` varchar(20) NOT NULL,
   `data_create` varchar(10) NOT NULL,
   `data_read` varchar(10) NOT NULL,
   `data_update` varchar(10) NOT NULL,
   `data_delete` varchar(10) NOT NULL,
   `data_export` varchar(10) NOT NULL,
-  `restricted` text NOT NULL
+  `restrict` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `created_at`, `updated_at`, `deleted_at`, `username`, `password`, `full_name`, `level`, `data_create`, `data_read`, `data_update`, `data_delete`, `data_export`, `restrict`) VALUES
+(1, '2021-06-10 09:00:35', '2021-06-10 09:57:25', NULL, 'admin', '$2y$10$H3ao.GXNqHYQL79nZ0p9LuGUb9euaQ6AYlCZyxgeVG7fDYzZN/R1K', 'ADMINISTRATOR', 'administrator', 'true', 'true', 'true', 'true', 'true', ''),
+(2, '2021-06-10 09:00:35', '2021-06-10 15:17:48', NULL, 'user', '$2y$10$csXV8PQ2p/FaYcqtLWCcTuzh26ADzBDX5cJLtpj9gFqJiRH5VNSt2', 'USER DEMO', 'user', 'false', 'true', 'false', 'false', 'false', 'users,category,sub_category');
 
 -- --------------------------------------------------------
 
@@ -243,7 +248,7 @@ CREATE TABLE `worker` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `nik` int(11) NOT NULL,
+  `nik` int(25) NOT NULL,
   `full_name` varchar(150) NOT NULL,
   `gender` varchar(25) NOT NULL,
   `telp` varchar(15) NOT NULL,
@@ -395,7 +400,7 @@ ALTER TABLE `type_inbox`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `worker`
