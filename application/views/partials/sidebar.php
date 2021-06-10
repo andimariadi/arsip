@@ -26,6 +26,13 @@
             <span class="docs-normal">Data Arsip</span>
           </h6>
           <ul class="navbar-nav">
+            <?= permission_menu_restrict('guest_book', '
+            <li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/guest_book') . '">
+                <i class="ni ni-book-bookmark text-primary"></i>
+                <span class="nav-link-text">Buku Tamu</span>
+              </a>
+            </li>');?>
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('dash/mail_inbox');?>">
                 <i class="ni ni-email-83 text-default"></i>
@@ -47,7 +54,7 @@
             <li class="nav-item">
               <a class="nav-link" href="<?= base_url('dash/archive');?>">
                 <i class="ni ni-collection text-warning"></i>
-                <span class="nav-link-text">Surat-surat</span>
+                <span class="nav-link-text">Arsip surat</span>
               </a>
             </li>
           </ul>
@@ -56,66 +63,66 @@
             <span class="docs-normal">Data Master</span>
           </h6>
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/workers');?>">
-                <i class="ni ni-single-02 text-orange"></i>
+            <?= permission_menu_restrict('workers', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/workers') . '">
+                <i class="ni ni-badge text-orange"></i>
                 <span class="nav-link-text">Karyawan</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/users');?>">
-                <i class="ni ni-user-run text-primary"></i>
+            </li>');?>
+            <?= permission_menu_restrict('users', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/users') . '">
+                <i class="ni ni-single-02 text-primary"></i>
                 <span class="nav-link-text">Users</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/notice');?>">
+            </li>');?>
+            <?= permission_menu_restrict('notice', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/notice') . '">
                 <i class="ni ni-notification-70 text-yellow"></i>
                 <span class="nav-link-text">Pengunguman</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/category');?>">
+            </li>');?>
+            <?= permission_menu_restrict('category', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/category') . '">
                 <i class="ni ni-folder-17 text-default"></i>
                 <span class="nav-link-text">Kategory Surat</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/sub_category');?>">
+            </li>');?>
+            <?= permission_menu_restrict('sub_category', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/sub_category') . '">
                 <i class="ni ni-bullet-list-67 text-info"></i>
                 <span class="nav-link-text">Sub Kategory Surat</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/description_category');?>">
+            </li>');?>
+            <?= permission_menu_restrict('description_category', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/description_category') . '">
                 <i class="ni ni-books text-danger"></i>
                 <span class="nav-link-text">Arahan</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/institute');?>">
-                <i class="ni ni-istanbul text-warning"></i>
+            </li>');?>
+            <?= permission_menu_restrict('institute', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/institute') . '">
+                <i class="ni ni-istanbul text-primary"></i>
                 <span class="nav-link-text">Instansi</span>
               </a>
-            </li>
+            </li>');?>
           </ul>
           <hr class="my-3">
           <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Laporan</span>
           </h6>
           <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/#');?>">
+            <?= permission_menu_restrict('workers', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/#') . '">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Surat Masuk</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/#');?>">
+            </li>');?>
+            <?= permission_menu_restrict('workers', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/#') . '">
                 <i class="ni ni-bullet-list-67 text-info"></i>
                 <span class="nav-link-text">Surat Keluar</span>
               </a>
-            </li>
+            </li>');?>
           </ul>
         </div>
       </div>
@@ -129,187 +136,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Navbar links -->
           <ul class="navbar-nav align-items-center  ml-md-auto ">
-            <li class="nav-item d-xl-none">
-              <!-- Sidenav toggler -->
-              <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin" data-target="#sidenav-main">
-                <div class="sidenav-toggler-inner">
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                  <i class="sidenav-toggler-line"></i>
-                </div>
-              </div>
-            </li>
-            <li class="nav-item d-sm-none">
-              <a class="nav-link" href="#" data-action="search-show" data-target="#navbar-search-main">
-                <i class="ni ni-zoom-split-in"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-bell-55"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-xl  dropdown-menu-right  py-0 overflow-hidden">
-                <!-- Dropdown header -->
-                <div class="px-3 py-3">
-                  <h6 class="text-sm text-muted m-0">You have <strong class="text-primary">13</strong> notifications.</h6>
-                </div>
-                <!-- List group -->
-                <div class="list-group list-group-flush">
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-1.jpg');?>" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-2.jpg');?>" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-3.jpg');?>" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>5 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Your posts have been liked a lot.</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-4.jpg');?>" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>2 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">Let's meet at Starbucks at 11:30. Wdyt?</p>
-                      </div>
-                    </div>
-                  </a>
-                  <a href="#!" class="list-group-item list-group-item-action">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
-                        <!-- Avatar -->
-                        <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-5.jpg');?>" class="avatar rounded-circle">
-                      </div>
-                      <div class="col ml--2">
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div>
-                            <h4 class="mb-0 text-sm">John Snow</h4>
-                          </div>
-                          <div class="text-right text-muted">
-                            <small>3 hrs ago</small>
-                          </div>
-                        </div>
-                        <p class="text-sm mb-0">A new issue has been reported for Argon.</p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-                <!-- View all -->
-                <a href="#!" class="dropdown-item text-center text-primary font-weight-bold py-3">View all</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="ni ni-ungroup"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                <div class="row shortcuts px-4">
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                      <i class="ni ni-calendar-grid-58"></i>
-                    </span>
-                    <small>Calendar</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                      <i class="ni ni-email-83"></i>
-                    </span>
-                    <small>Email</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                      <i class="ni ni-credit-card"></i>
-                    </span>
-                    <small>Payments</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                      <i class="ni ni-books"></i>
-                    </span>
-                    <small>Reports</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                      <i class="ni ni-pin-3"></i>
-                    </span>
-                    <small>Maps</small>
-                  </a>
-                  <a href="#!" class="col-4 shortcut-item">
-                    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                      <i class="ni ni-basket"></i>
-                    </span>
-                    <small>Shop</small>
-                  </a>
-                </div>
-              </div>
-            </li>
+            
           </ul>
           <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
             <li class="nav-item dropdown">
               <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" src="<?= base_url('assets/img/theme/team-4.jpg');?>">
+                    <img alt="Image placeholder" src="<?= base_url('assets/img/theme/bootstrap.jpg');?>">
                   </span>
                   <div class="media-body  ml-2  d-none d-lg-block">
-                    <span class="mb-0 text-sm  font-weight-bold">John Snow</span>
+                    <span class="mb-0 text-sm  font-weight-bold"><?= $this->session->userdata('full_name');?></span>
                   </div>
                 </div>
               </a>
@@ -334,7 +171,7 @@
                   <span>Support</span>
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#!" class="dropdown-item">
+                <a href="<?= base_url('auth/logout');?>" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>
                 </a>

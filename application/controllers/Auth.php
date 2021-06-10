@@ -60,4 +60,10 @@ class Auth extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect(base_url('Auth'));
+	}
 }

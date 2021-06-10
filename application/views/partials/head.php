@@ -18,4 +18,15 @@ $title = isset($title) ? $title : 'Dashboard';?>
   <link rel="stylesheet" href="<?= base_url('assets/vendor/@fortawesome/fontawesome-free/css/all.min.css');?>" type="text/css">
   <!-- Argon CSS -->
   <link rel="stylesheet" href="<?= base_url('assets/css/argon.css?v=1.2.0');?>" type="text/css">
+  
+  <!-- Argon Scripts -->
+  <!-- Core -->
+  <script src="<?= base_url('assets/vendor/jquery/dist/jquery.min.js');?>"></script>
+  <script src="<?= base_url('assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js');?>"></script>
+  <script src="<?= base_url('assets/vendor/js-cookie/js.cookie.js');?>"></script>
+  <script src="<?= base_url('assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js');?>"></script>
+  <script src="<?= base_url('assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js');?>"></script>
+  <!-- Optional JS -->
+  <script src="<?= base_url('assets/vendor/chart.js/dist/Chart.min.js');?>"></script>
+  <script src="<?= base_url('assets/vendor/chart.js/dist/Chart.extension.js');?>"></script>
 </head>

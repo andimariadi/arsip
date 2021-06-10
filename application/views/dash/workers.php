@@ -5,15 +5,17 @@
         <div class="col-lg-6 col-7">
           
         </div>
+        
         <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral">
+          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
             <span class="ni ni-fat-add"></span>
             New
-          </a>
+          </a>');?>
+          <?= permission_export('
           <a href="#" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
-          </a>
+          </a>');?>
         </div>
       </div>
     </div>
@@ -21,6 +23,7 @@
 </div>
 
 <div class="container-fluid mt--6">
+  <?= $this->session->flashdata('msg');?>
   <div class="row">
     <div class="col">
       <div class="card">
@@ -43,25 +46,26 @@
               </tr>
             </thead>
             <tbody class="list">
+              <?php foreach ($data_workers as $value) : ?>
               <tr>
                 <th scope="row">
-                  0123456789
+                  <?= strtoupper($value['nik']);?>
                 </th>
-                <td class="budget">
-                  <?= strtoupper('ANDI MARIADI');?>
+                <td>
+                  <?= strtoupper($value['full_name']);?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= strtoupper($value['gender']);?>
                 </td>
                 <td>
-                  +6281234567890
+                  <?= strtoupper($value['telp']);?>
                 </td>
                 <td style="white-space: normal;">
-                  Pacific Century Place Tower Level 45 SCBD Lot 10, Jl. Jend. Sudirman No.53, RT.5/RW.3, Senayan, Kebayoran Baru, South Jakarta City, Jakarta 12190, Indonesia
+                  <?= strtoupper($value['address']);?>
                 </td>
                 <td>
                   <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
-                    <img alt="Image placeholder" src="../assets/img/theme/team-1.jpg">
+                    <img alt="Image placeholder" src="<?= base_url($value['image']);?>">
                   </a>
                 </td>
                 <td class="text-right">
@@ -70,20 +74,174 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Update</a>
-                      <a class="dropdown-item" href="#">Delete</a>
+                      <?= permission_update('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#updateModal" data-id="'.$value['id'].'" data-nik="'.$value['nik'].'" data-full_name="'.$value['full_name'].'" data-gender="'.$value['gender'].'" data-telp="'.$value['telp'].'" data-address="'.$value['address'].'" data-image="'.base_url($value['image']).'">Update</a>');?>
+                      <?= permission_delete('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" data-id="'.$value['id'].'">Delete</a>');?>
                     </div>
                   </div>
                 </td>
               </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => 10, 'page' => 1, 'url' => 'dash/'
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/workers/')
           )
         );?>
       </div>
     </div>
   </div>
+
+  <?= permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('create/workers') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Tambah Karyawan</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+            <div class="form-group">
+              <label>NIK</label>
+              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="nik">
+            </div>
+
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
+            </div>
+
+            <div class="form-group">
+              <label>Jenis Kelamin</label>
+              <select class="form-control" name="gender">
+                <option value="laki-laki">Laki-laki</option>
+                <option value="perempuan">Perempuan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nomor Handphone</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="telp">
+            </div>
+
+            <div class="form-group">
+              <label>Alamat Lengkap</label>
+              <textarea class="form-control" name="address" placeholder="Alamat lengkap"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Gambar</label>
+              <input type="file" class="form-control" name="image" />
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+  <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('update/workers') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Ubah Karyawan</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+            <input type="hidden" name="id">
+            <div class="form-group">
+              <label>NIK</label>
+              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="nik">
+            </div>
+
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
+            </div>
+
+            <div class="form-group">
+              <label>Jenis Kelamin</label>
+              <select class="form-control" name="gender">
+                <option value="laki-laki">Laki-laki</option>
+                <option value="perempuan">Perempuan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nomor Handphone</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="telp">
+            </div>
+
+            <div class="form-group">
+              <label>Alamat Lengkap</label>
+              <textarea class="form-control" name="address" placeholder="Alamat lengkap"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Gambar</label>
+            </div>
+
+            <div class="form-group">              
+              <img src="#" id="image" class="img-thumbnail" />
+              <input type="file" class="form-control" name="image" />
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+
+  <?php permission_delete( $this->component->delete( base_url('Delete/workers') ) );?>
+<!-- MODAL BOOTSTRAP SCRIPT -->
+
+<script type="text/javascript">
+  $('#updateModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var nik = button.data('nik');
+    var full_name = button.data('full_name');
+    var gender = button.data('gender');
+    var telp = button.data('telp');
+    var address = button.data('address');
+    var image = button.data('image');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id);
+    modal.find('.modal-body input[name=nik]').val(nik);
+    modal.find('.modal-body input[name=full_name]').val(full_name);
+    modal.find('.modal-body select[name=gender]').val(gender);
+    modal.find('.modal-body input[name=telp]').val(telp.toString() );
+    modal.find('.modal-body textarea[name=address]').val(address.toString() );
+    modal.find('.modal-body img[id=image]').attr("src", image);
+  });
+
+  $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id)
+  });
+</script>
