@@ -11,7 +11,10 @@ class Description_model extends CI_Model
 
 	public function getData($start, $limit)
 	{
-		$this->db->where('deleted_at', NULL);
+		$this->db->select('description_subcategory.*, subcategory.name as subcategory_description, worker.full_name');
+		$this->db->where('description_subcategory.deleted_at', NULL);
+		$this->db->join('subcategory', 'subcategory.id = description_subcategory.subcategory_id', 'left');
+		$this->db->join('worker', 'worker.id = description_subcategory.user', 'left');
 		$this->db->limit($limit, $start);
 		return $this->db->get('description_subcategory');
 	}

@@ -211,4 +211,94 @@ class Update extends CI_Controller {
 		
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function notice()
+	{
+		$this->load->model('Notice_model', 'notice');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		$this->form_validation->set_rules('number', 'number', 'required');
+		$this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('description', 'description', 'required');
+		$this->form_validation->set_rules('expired_at', 'expired_at', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->notice->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() === 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Karyawan tidak ditemukan!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+		            $this->notice->update($this->input->post('id'),
+						array(
+							'updated_at' => date('Y-m-d H:i:s'),
+							'number' => $this->input->post('number'),
+							'title' => $this->input->post('title'),
+							'description' => $this->input->post('description'),
+							'expired_at' => $this->input->post('expired_at'),
+						)
+					);
+				}else{
+
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->notice->update($this->input->post('id'),
+						array(
+							'updated_at' => date('Y-m-d H:i:s'),
+							'number' => $this->input->post('number'),
+							'title' => $this->input->post('title'),
+							'description' => $this->input->post('description'),
+							'expired_at' => $this->input->post('expired_at'),
+							'path' => $path
+						)
+					);
+				}
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil diedit!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function description_category()
+	{
+		$this->load->model('Description_model', 'desccategory');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		$this->form_validation->set_rules('subcategory_id', 'subcategory_id', 'required');
+		$this->form_validation->set_rules('remark', 'remark', 'required');
+		$this->form_validation->set_rules('area', 'area', 'required');
+		$this->form_validation->set_rules('user', 'user', 'required');
+		$this->form_validation->set_rules('time_minutes', 'time_minutes', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->desccategory->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() === 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Karyawan tidak ditemukan!</div>' );
+			} else {
+	            $this->desccategory->update($this->input->post('id'),
+					array(
+							'updated_at' => date('Y-m-d H:i:s'),
+							'subcategory_id' => $this->input->post('subcategory_id'),
+							'remark' => $this->input->post('remark'),
+							'area' => $this->input->post('area'),
+							'user' => $this->input->post('user'),
+							'time_minutes' => $this->input->post('time_minutes'),
+						)
+				);
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil diedit!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
 }

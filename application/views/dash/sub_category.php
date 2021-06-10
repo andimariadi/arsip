@@ -21,6 +21,7 @@
 </div>
 
 <div class="container-fluid mt--6">
+  <?= $this->session->flashdata('msg');?>
   <div class="row">
     <div class="col">
       <div class="card">
@@ -56,6 +57,7 @@
                   <?= ucfirst($value['remark']);?>
                 </td>
                 <td class="text-right">
+                  <?php if (permission_update('true') != '' || permission_delete('true') != ''): ?>
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
@@ -65,6 +67,7 @@
                       <?= permission_delete('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" data-id="'.$value['id'].'">Delete</a>');?>
                     </div>
                   </div>
+                  <?php endif;?>
                 </td>
               </tr>
               <?php endforeach; ?>

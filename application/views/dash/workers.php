@@ -126,7 +126,7 @@
 
             <div class="form-group">
               <label>Nomor Handphone</label>
-              <input type="text" class="form-control" placeholder="Nama Lengkap" name="telp">
+              <input type="text" class="form-control" placeholder="Nomor Handphone" name="telp">
             </div>
 
             <div class="form-group">
@@ -185,7 +185,7 @@
 
             <div class="form-group">
               <label>Nomor Handphone</label>
-              <input type="text" class="form-control" placeholder="Nama Lengkap" name="telp">
+              <input type="text" class="form-control" placeholder="Nomor Handphone" name="telp">
             </div>
 
             <div class="form-group">

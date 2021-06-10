@@ -93,7 +93,20 @@ class Dash extends CI_Controller {
 	public function description_category($page = 1)
 	{
 		permission_restrict('description_category');
-		$this->template->load('Arahan','dash/description_category');
+
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->load->model('Description_model', 'desccategory');
+		$this->load->model('Worker_model', 'worker');
+
+		//pagging
+		$total = $this->desccategory->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_desccategory'] = $this->desccategory->getData($start, $this->per_page)->result_array();
+		$data['data_subcategory'] = $this->subcategory->view()->result_array();
+		$data['data_worker'] = $this->worker->view()->result_array();
+		$this->template->load('Arahan','dash/description_category', $data);
 	}
 
 	public function mail_inbox($page = 1)
