@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 10, 2021 at 03:59 PM
+-- Generation Time: Jun 11, 2021 at 02:26 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,6 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `archives`
+--
+
+CREATE TABLE `archives` (
+  `id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `path` varchar(250) NOT NULL,
+  `number` varchar(100) NOT NULL,
+  `title` varchar(250) NOT NULL,
+  `description` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `archive_public`
 --
 
@@ -36,7 +54,7 @@ CREATE TABLE `archive_public` (
   `number` varchar(100) NOT NULL,
   `title` varchar(250) NOT NULL,
   `description` varchar(250) NOT NULL,
-  `expired_at` datetime DEFAULT NULL
+  `expired_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
@@ -68,7 +86,7 @@ CREATE TABLE `description_subcategory` (
   `deleted_at` datetime DEFAULT NULL,
   `subcategory_id` int(10) NOT NULL,
   `remark` text NOT NULL,
-  `area` int(10) NOT NULL,
+  `area` varchar(250) NOT NULL,
   `user` int(10) NOT NULL,
   `time_minutes` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -85,16 +103,18 @@ CREATE TABLE `disposition` (
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(25) NOT NULL,
+  `subcategory_id` int(10) NOT NULL,
+  `institute_id` int(10) NOT NULL,
   `nik` varchar(50) NOT NULL,
   `file_number` varchar(50) NOT NULL,
   `reference_number` varchar(50) NOT NULL,
+  `type` varchar(250) NOT NULL,
   `date` date NOT NULL,
   `date_recieved` date NOT NULL,
   `about` text NOT NULL,
-  `sub_category` int(10) NOT NULL,
   `purpose` text NOT NULL,
-  `type` int(10) NOT NULL,
-  `remark` text NOT NULL
+  `remark` text NOT NULL,
+  `path` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -129,8 +149,7 @@ CREATE TABLE `institute` (
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(50) NOT NULL,
   `name` text NOT NULL,
-  `address` text NOT NULL,
-  `disposition_id` varchar(50) NOT NULL
+  `address` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -147,8 +166,9 @@ CREATE TABLE `mail_inbox` (
   `code` varchar(25) NOT NULL,
   `number` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `category_id` int(10) NOT NULL,
   `about` text NOT NULL,
-  `type` int(10) NOT NULL,
+  `type` varchar(250) NOT NULL,
   `institute_id` int(10) NOT NULL,
   `document` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -167,8 +187,9 @@ CREATE TABLE `mail_outbox` (
   `code` varchar(25) NOT NULL,
   `number` varchar(100) NOT NULL,
   `date` date NOT NULL,
+  `category_id` int(10) NOT NULL,
   `about` text NOT NULL,
-  `type` int(10) NOT NULL,
+  `type` varchar(250) NOT NULL,
   `institute_id` int(10) NOT NULL,
   `document` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -261,6 +282,12 @@ CREATE TABLE `worker` (
 --
 
 --
+-- Indexes for table `archives`
+--
+ALTER TABLE `archives`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `archive_public`
 --
 ALTER TABLE `archive_public`
@@ -335,6 +362,12 @@ ALTER TABLE `worker`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `archives`
+--
+ALTER TABLE `archives`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `archive_public`

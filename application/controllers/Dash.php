@@ -109,39 +109,109 @@ class Dash extends CI_Controller {
 		$this->template->load('Arahan','dash/description_category', $data);
 	}
 
+	public function institute($page = 1)
+	{
+		permission_restrict('institute');
+
+		$this->load->model('Institute_model', 'institute');
+
+		//pagging
+		$total = $this->institute->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_institute'] = $this->institute->getData($start, $this->per_page)->result_array();
+		$this->template->load('Institusi','dash/institute', $data);
+	}
+
 	public function mail_inbox($page = 1)
 	{
 		permission_restrict('mail_inbox');
-		$this->template->load('Surat Masuk','dash/mail_inbox');
+
+		$this->load->model('Inbox_model', 'inbox');
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->load->model('Institute_model', 'institute');
+
+		//pagging
+		$total = $this->inbox->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_inbox'] = $this->inbox->getData($start, $this->per_page)->result_array();
+		$data['data_subcategory'] = $this->subcategory->view()->result_array();
+		$data['data_institute'] = $this->institute->view()->result_array();
+		$this->template->load('Surat Masuk','dash/mail_inbox', $data);
 	}
 
 	public function mail_outbox($page = 1)
 	{
 		permission_restrict('mail_outbox');
-		$this->template->load('Surat Keluar','dash/mail_outbox');
+		
+		$this->load->model('Outbox_model', 'outbox');
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->load->model('Institute_model', 'institute');
+
+		//pagging
+		$total = $this->outbox->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_outbox'] = $this->outbox->getData($start, $this->per_page)->result_array();
+		$data['data_subcategory'] = $this->subcategory->view()->result_array();
+		$data['data_institute'] = $this->institute->view()->result_array();
+		$this->template->load('Surat Keluar','dash/mail_outbox', $data);
 	}
 
 	public function disposition($page = 1)
 	{
 		permission_restrict('disposition');
-		$this->template->load('Surat Disposis','dash/disposition');
-	}
 
-	public function institute($page = 1)
-	{
-		permission_restrict('institute');
-		$this->template->load('Institusi','dash/institute');
+		$this->load->model('Disposition_model', 'disposition');
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->load->model('Institute_model', 'institute');
+
+		//pagging
+		$total = $this->disposition->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_disposition'] = $this->disposition->getData($start, $this->per_page)->result_array();
+		$data['data_subcategory'] = $this->subcategory->view()->result_array();
+		$data['data_institute'] = $this->institute->view()->result_array();
+		$this->template->load('Surat Disposisi','dash/disposition', $data);
 	}
 
 	public function archive($page = 1)
 	{
 		permission_restrict('archive');
-		$this->template->load('Arsip Surat','dash/archive');
+		
+		$this->load->model('Archives_model', 'archives');
+		//pagging
+		$total = $this->archives->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_archives'] = $this->archives->getData($start, $this->per_page)->result_array();
+
+		$this->template->load('Arsip Surat','dash/archive', $data);
 	}
 
 	public function guest_book($page = 1)
 	{
 		permission_restrict('guest_book');
-		$this->template->load('Buku Tamu','dash/guest_book');
+		
+		$this->load->model('Guestbook_model', 'guestbook');
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->load->model('Institute_model', 'institute');
+
+		//pagging
+		$total = $this->guestbook->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_guestbook'] = $this->guestbook->getData($start, $this->per_page)->result_array();
+		$data['data_subcategory'] = $this->subcategory->view()->result_array();
+		$data['data_institute'] = $this->institute->view()->result_array();
+		$this->template->load('Buku Tamu','dash/guest_book', $data);
 	}
 }

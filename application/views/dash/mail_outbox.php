@@ -6,14 +6,15 @@
           
         </div>
         <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral">
+          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
             <span class="ni ni-fat-add"></span>
             New
-          </a>
+          </a>');?>
+          <?= permission_export('
           <a href="#" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
-          </a>
+          </a>');?>
         </div>
       </div>
     </div>
@@ -21,12 +22,13 @@
 </div>
 
 <div class="container-fluid mt--6">
+  <?= $this->session->flashdata('msg');?>
   <div class="row">
     <div class="col">
       <div class="card">
         <!-- Card header -->
         <div class="card-header border-0">
-          <h3 class="mb-0">Data Surat Keluar</h3>
+          <h3 class="mb-0">Data Surat Masuk</h3>
         </div>
         <!-- Light table -->
         <div class="table-responsive">
@@ -45,54 +47,262 @@
               </tr>
             </thead>
             <tbody class="list">
+              <?php foreach ($data_outbox as $value) : ?>
               <tr>
                 <th scope="row">
-                  0123456789
+                  <?= $value['code'];?>
                 </th>
-                <td class="budget">
-                  <?= strtoupper('ANDI MARIADI');?>
+                <td>
+                  <?= $value['number'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['date'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['category_id'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['about'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['type'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['institute_id'];?>
                 </td>
                 <td>
-                  <a href="#" class="btn btn-neutral btn-sm">
-                    <span class="ni ni-cloud-download-95"></span>
-                    Download
-                  </a>
+                  <?php if ( file_exists($value['document']) ) : ?>
+                    <a href="<?= base_url($value['document']);?>" class="btn btn-primary btn-sm"><span class="ni ni-cloud-download-95"></span> Download</a>
+                  <?php endif;?>
                 </td>
                 <td class="text-right">
+                  <?php if (permission_update('true') != '' || permission_delete('true') != ''): ?>
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Update</a>
-                      <a class="dropdown-item" href="#">Delete</a>
+                      <?= permission_update('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#updateModal" data-id="'.$value['id'].'" data-institute_id="'.$value['institute_id'].'" data-type="'.$value['type'].'" data-category_id="'.$value['category_id'].'" data-date="'.$value['date'].'" data-code="'.$value['code'].'" data-number="'.$value['number'].'" data-about="'.$value['about'].'">Update</a>');?>
+                      <?= permission_delete('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" data-id="'.$value['id'].'">Delete</a>');?>
                     </div>
                   </div>
+                  <?php endif;?>
                 </td>
               </tr>
+              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
+        
         <?php $this->template->pagging(
           array(
-            'page_total' => 10, 'page' => 1, 'url' => 'dash/'
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/mail_outbox/')
           )
         );?>
       </div>
     </div>
   </div>
+
+  <?php
+  $category = "";
+  foreach ($data_subcategory as $value) {
+    $category .= '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+  }
+  $institute = "";
+  foreach ($data_institute as $value) {
+    $institute .= '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+  }
+
+  echo permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('create/mail_outbox') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Tambah Surat Keluar</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label>Instansi</label>
+              <select class="form-control" name="institute_id">
+                '.$institute.'
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select class="form-control" name="category_id">
+                '.$category.'
+              </select>
+            </div>
+            <div class="row"><div class="col-md-6">
+            
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date" class="form-control" placeholder="Tanggal" name="date" value="'.date('Y-m-d').'" />
+              </div>
+
+            </div><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Kode Surat</label>
+                <input type="text" class="form-control" placeholder="Kode Surat" name="code">
+              </div>
+
+            </div></div>
+            <div class="row"><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Nomor Surat</label>
+                <input type="text" class="form-control" placeholder="Nomor Surat" name="number">
+              </div>
+
+            </div><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Jenis Surat</label>
+                <input type="text" class="form-control" placeholder="Jenis Surat" name="type">
+              </div>
+
+            </div></div>
+
+            <div class="form-group">
+              <label>Keterangan</label>
+              <textarea name="about" id="editor" placeholder="Keterangan" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Dokumen</label>
+              <input type="file" class="form-control" name="document" />
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+
+  <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('update/mail_outbox') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Ubah Surat Keluar</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+                <input type="hidden" name="id">
+
+            <div class="form-group">
+              <label>Instansi</label>
+              <select class="form-control" name="institute_id">
+                '.$institute.'
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select class="form-control" name="category_id">
+                '.$category.'
+              </select>
+            </div>
+            <div class="row"><div class="col-md-6">
+            
+              <div class="form-group">
+                <label>Tanggal</label>
+                <input type="date" class="form-control" placeholder="Tanggal" name="date" value="'.date('Y-m-d').'" />
+              </div>
+
+            </div><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Kode Surat</label>
+                <input type="text" class="form-control" placeholder="Kode Surat" name="code">
+              </div>
+
+            </div></div>
+            <div class="row"><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Nomor Surat</label>
+                <input type="text" class="form-control" placeholder="Nomor Surat" name="number">
+              </div>
+
+            </div><div class="col-md-6">
+
+              <div class="form-group">
+                <label>Jenis Surat</label>
+                <input type="text" class="form-control" placeholder="Jenis Surat" name="type">
+              </div>
+
+            </div></div>
+
+            <div class="form-group">
+              <label>Keterangan</label>
+              <textarea name="about" id="editor" placeholder="Keterangan" class="form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Dokumen</label>
+              <input type="file" class="form-control" name="document" />
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+  <?php permission_delete( $this->component->delete( base_url('Delete/mail_outbox') ) );?>
+
+<!-- MODAL BOOTSTRAP SCRIPT -->
+
+<script type="text/javascript">
+  $('#updateModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var institute_id = button.data('institute_id');
+    var category_id = button.data('category_id');
+    var type = button.data('type');
+    var date = button.data('date');
+    var code = button.data('code');
+    var number = button.data('number');
+    var about = button.data('about');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id);
+    modal.find('.modal-body select[name=institute_id]').val(institute_id);
+    modal.find('.modal-body select[name=category_id]').val(category_id);
+    modal.find('.modal-body input[name=date]').val(date);
+    modal.find('.modal-body input[name=type]').val(type);
+    modal.find('.modal-body input[name=code]').val(code);
+    modal.find('.modal-body input[name=number]').val(number);
+    modal.find('.modal-body textarea[name=about]').val(about);
+  });
+
+  $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id)
+  });
+</script>

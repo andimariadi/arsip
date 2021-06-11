@@ -26,6 +26,16 @@ class Description_model extends CI_Model
 		return $this->db->get('description_subcategory');
 	}
 
+	public function GetWhere($where = array())
+	{
+		$this->db->select('description_subcategory.*, subcategory.name as subcategory_description, worker.full_name');
+		$this->db->where('description_subcategory.deleted_at', NULL);
+		$this->db->join('subcategory', 'subcategory.id = description_subcategory.subcategory_id', 'left');
+		$this->db->join('worker', 'worker.id = description_subcategory.user', 'left');
+		$this->db->where($where);
+		return $this->db->get('description_subcategory');
+	}
+
 	public function create($data = array())
 	{
 		return $this->db->insert('description_subcategory', $data);

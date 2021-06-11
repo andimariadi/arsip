@@ -6,14 +6,15 @@
           
         </div>
         <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral">
+          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
             <span class="ni ni-fat-add"></span>
             New
-          </a>
+          </a>');?>
+          <?= permission_export('
           <a href="#" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
-          </a>
+          </a>');?>
         </div>
       </div>
     </div>
@@ -21,6 +22,7 @@
 </div>
 
 <div class="container-fluid mt--6">
+  <?= $this->session->flashdata('msg');?>
   <div class="row">
     <div class="col">
       <div class="card">
@@ -43,51 +45,198 @@
               </tr>
             </thead>
             <tbody class="list">
+              <?php foreach ($data_guestbook as $value) : ?>
               <tr>
                 <th scope="row">
-                  0123456789
+                  <?= $value['date'];?>
                 </th>
-                <td class="budget">
-                  <?= strtoupper('ANDI MARIADI');?>
+                <td>
+                  <?= $value['nik'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['full_name'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['address'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
+                  <?= $value['utility_description'];?>
                 </td>
                 <td>
-                  <?= ucwords('Laki-laki');?>
-                </td>
-                <td>
-                  <a href="#" class="btn btn-neutral btn-sm">
-                    <span class="ni ni-cloud-download-95"></span>
-                    Download
-                  </a>
+                  <?= $value['institute_description'];?>
                 </td>
                 <td class="text-right">
+                  <?php if (permission_update('true') != '' || permission_delete('true') != ''): ?>
                   <div class="dropdown">
                     <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <a class="dropdown-item" href="#">Update</a>
-                      <a class="dropdown-item" href="#">Delete</a>
+                      <?= permission_update('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#updateModal" data-id="'.$value['id'].'" data-nik="'.$value['nik'].'" data-full_name="'.$value['full_name'].'" data-address="'.$value['address'].'" data-utility="'.$value['utility'].'" data-institute_id="'.$value['institute_id'].'">Update</a>');?>
+                      <?= permission_delete('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" data-id="'.$value['id'].'">Delete</a>');?>
                     </div>
                   </div>
+                  <?php endif;?>
                 </td>
+                <?php endforeach; ?>
               </tr>
             </tbody>
           </table>
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => 10, 'page' => 1, 'url' => 'dash/'
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/guest_book/')
           )
         );?>
       </div>
     </div>
   </div>
+
+  
+  <?php
+  $category = "";
+  foreach ($data_subcategory as $value) {
+    $category .= '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+  }
+  $institute = "";
+  foreach ($data_institute as $value) {
+    $institute .= '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
+  }
+
+  echo permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('create/guest_book') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Tambah Buku Tamu</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+
+            <div class="form-group">
+              <label>Instansi</label>
+              <select class="form-control" name="institute_id">
+                '.$institute.'
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Keperluan</label>
+              <select class="form-control" name="utility">
+                '.$category.'
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nomor Induk Kependudukan</label>
+              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="nik">
+            </div>
+
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
+            </div>
+
+            <div class="form-group">
+              <label>Alamat</label>
+              <textarea class="form-control" name="address" placeholder="Alamat"></textarea>
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+  <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <form method="POST" action="' . base_url('update/guest_book') . '" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Ubah Buku Tamu</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+
+
+          <div class="modal-body">
+            <input type="hidden" name="id">
+            <div class="form-group">
+              <label>Instansi</label>
+              <select class="form-control" name="institute_id">
+                '.$institute.'
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Keperluan</label>
+              <select class="form-control" name="utility">
+                '.$category.'
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Nomor Induk Kependudukan</label>
+              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="nik">
+            </div>
+
+            <div class="form-group">
+              <label>Nama Lengkap</label>
+              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
+            </div>
+
+            <div class="form-group">
+              <label>Alamat</label>
+              <textarea class="form-control" name="address" placeholder="Alamat"></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>');?>
+
+  <?php permission_delete( $this->component->delete( base_url('Delete/guest_book') ) );?>
+<!-- MODAL BOOTSTRAP SCRIPT -->
+
+<script type="text/javascript">
+  $('#updateModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var nik = button.data('nik');
+    var full_name = button.data('full_name');
+    var address = button.data('address');
+    var utility = button.data('utility');
+    var institute_id = button.data('institute_id');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id);
+    modal.find('.modal-body input[name=nik]').val(nik);
+    modal.find('.modal-body input[name=full_name]').val(full_name);
+    modal.find('.modal-body textarea[name=address]').val(address);
+    modal.find('.modal-body input[name=utility]').val(utility);
+    modal.find('.modal-body textarea[name=institute_id]').val(institute_id);
+  });
+
+  $('#deleteModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    modal.find('.modal-body input[name=id]').val(id)
+  });
+</script>

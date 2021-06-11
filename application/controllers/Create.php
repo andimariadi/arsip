@@ -232,23 +232,319 @@ class Create extends CI_Controller {
 		$this->form_validation->set_rules('user', 'user', 'required');
 		$this->form_validation->set_rules('time_minutes', 'time_minutes', 'required');
 		if( $this->form_validation->run() != false ) {
-			// $check_data = $this->desccategory->where( array('number' => $this->input->post('number'), 'deleted_at'=> null ) );
-			// if ($check_data->num_rows() > 0) {
-			// 	$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
-			// } else {
-		            $this->desccategory->create(
+			$check_data = $this->desccategory->where( array('subcategory_id' => $this->input->post('subcategory_id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Penjelasan kategory sudah ada!</div>' );
+			} else {
+	            $this->desccategory->create(
+					array(
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
+						'subcategory_id' => $this->input->post('subcategory_id'),
+						'remark' => $this->input->post('remark'),
+						'area' => $this->input->post('area'),
+						'user' => $this->input->post('user'),
+						'time_minutes' => $this->input->post('time_minutes'),
+					)
+				);
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function institute(){
+		$this->load->model('Institute_model', 'institute');
+		$this->form_validation->set_rules('code', 'code', 'required');
+		$this->form_validation->set_rules('name', 'name', 'required');
+		$this->form_validation->set_rules('address', 'address', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->institute->where( array('code' => $this->input->post('code'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
+			} else {
+	            $this->institute->create(
+					array(
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
+						'code' => $this->input->post('code'),
+						'name' => $this->input->post('name'),
+						'address' => $this->input->post('address'),
+					)
+				);
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function mail_inbox()
+	{
+		$this->load->model('Inbox_model', 'inbox');
+		$this->form_validation->set_rules('institute_id', 'institute_id', 'required');
+		$this->form_validation->set_rules('type', 'type', 'required');
+		$this->form_validation->set_rules('date', 'date', 'required');
+		$this->form_validation->set_rules('code', 'code', 'required');
+		$this->form_validation->set_rules('number', 'number', 'required');
+		$this->form_validation->set_rules('about', 'about', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->inbox->where( array('code' => $this->input->post('code'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+					$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  $this->upload->display_errors() ) . '</div>' );
+				}else{
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->inbox->create(
 						array(
 							'created_at' => date('Y-m-d H:i:s'),
 							'updated_at' => date('Y-m-d H:i:s'),
-							'subcategory_id' => $this->input->post('subcategory_id'),
-							'remark' => $this->input->post('remark'),
-							'area' => $this->input->post('area'),
-							'user' => $this->input->post('user'),
-							'time_minutes' => $this->input->post('time_minutes'),
+							'institute_id' => $this->input->post('institute_id'),
+							'category_id' => $this->input->post('category_id'),
+							'type' => $this->input->post('type'),
+							'date' => $this->input->post('date'),
+							'code' => $this->input->post('code'),
+							'number' => $this->input->post('number'),
+							'about' => $this->input->post('about'),
+							'document' => $path
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
-			// }
+				}
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function mail_outbox()
+	{
+		$this->load->model('Outbox_model', 'outbox');
+		$this->form_validation->set_rules('institute_id', 'institute_id', 'required');
+		$this->form_validation->set_rules('type', 'type', 'required');
+		$this->form_validation->set_rules('date', 'date', 'required');
+		$this->form_validation->set_rules('code', 'code', 'required');
+		$this->form_validation->set_rules('number', 'number', 'required');
+		$this->form_validation->set_rules('about', 'about', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->outbox->where( array('code' => $this->input->post('code'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+					$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  $this->upload->display_errors() ) . '</div>' );
+				}else{
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->outbox->create(
+						array(
+							'created_at' => date('Y-m-d H:i:s'),
+							'updated_at' => date('Y-m-d H:i:s'),
+							'institute_id' => $this->input->post('institute_id'),
+							'category_id' => $this->input->post('category_id'),
+							'type' => $this->input->post('type'),
+							'date' => $this->input->post('date'),
+							'code' => $this->input->post('code'),
+							'number' => $this->input->post('number'),
+							'about' => $this->input->post('about'),
+							'document' => $path
+						)
+					);
+					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
+				}
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function guest_book()
+	{
+		$this->load->model('Guestbook_model', 'guestbook');
+		$this->load->model('Subcategory_model', 'subcategory');
+		$this->form_validation->set_rules('nik', 'nik', 'required');
+		$this->form_validation->set_rules('full_name', 'full_name', 'required');
+		$this->form_validation->set_rules('address', 'address', 'required');
+		$this->form_validation->set_rules('utility', 'utility', 'required');
+		$this->form_validation->set_rules('institute_id', 'institute_id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->subcategory->where( array('id' => $this->input->post('utility'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() === 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Keperluan tidak ditemukan!</div>' );
+			} else {
+
+				$this->guestbook->create(
+					array(
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
+						'date' => date('Y-m-d'),
+						'nik' => $this->input->post('nik'),
+						'full_name' => $this->input->post('full_name'),
+						'address' => $this->input->post('address'),
+						'utility' => $this->input->post('utility'),
+						'institute_id' => $this->input->post('institute_id'),
+					)
+				);
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function archive()
+	{
+		$this->load->model('Archives_model', 'archives');
+		$this->form_validation->set_rules('number', 'number', 'required');
+		$this->form_validation->set_rules('title', 'title', 'required');
+		$this->form_validation->set_rules('description', 'description', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->archives->where( array('number' => $this->input->post('number'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+					$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  $this->upload->display_errors() ) . '</div>' );
+				}else{
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->archives->create(
+						array(
+							'created_at' => date('Y-m-d H:i:s'),
+							'updated_at' => date('Y-m-d H:i:s'),
+							'number' => $this->input->post('number'),
+							'title' => $this->input->post('title'),
+							'description' => $this->input->post('description'),
+							'path' => $path
+						)
+					);
+					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
+				}
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function disposition()
+	{
+		$this->load->model('Disposition_model', 'disposition');
+		$this->form_validation->set_rules('code', 'code', 'required');
+		$this->form_validation->set_rules('subcategory_id', 'subcategory_id', 'required');
+		$this->form_validation->set_rules('institute_id', 'institute_id', 'required');
+		$this->form_validation->set_rules('nik', 'nik', 'required');
+		$this->form_validation->set_rules('file_number', 'file_number', 'required');
+		$this->form_validation->set_rules('reference_number', 'reference_number', 'required');
+		$this->form_validation->set_rules('type', 'type', 'required');
+		$this->form_validation->set_rules('date', 'date', 'required');
+		$this->form_validation->set_rules('date_recieved', 'date_recieved', 'required');
+		$this->form_validation->set_rules('about', 'about', 'required');
+		$this->form_validation->set_rules('purpose', 'purpose', 'required');
+		$this->form_validation->set_rules('remark', 'remark', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->disposition->where( array('code' => $this->input->post('code'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Nomor kode sudah ada!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+					
+		            $this->disposition->create(
+						array(
+							'created_at' => date('Y-m-d H:i:s'),
+							'updated_at' => date('Y-m-d H:i:s'),
+							'code' => $this->input->post('code'),
+							'subcategory_id' => $this->input->post('subcategory_id'),
+							'institute_id' => $this->input->post('institute_id'),
+							'nik' => $this->input->post('nik'),
+							'file_number' => $this->input->post('file_number'),
+							'reference_number' => $this->input->post('reference_number'),
+							'type' => $this->input->post('type'),
+							'date' => $this->input->post('date'),
+							'date_recieved' => $this->input->post('date_recieved'),
+							'about' => $this->input->post('about'),
+							'purpose' => $this->input->post('purpose'),
+							'remark' => $this->input->post('remark'),
+						)
+					);
+				}else{
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->disposition->create(
+						array(
+							'created_at' => date('Y-m-d H:i:s'),
+							'updated_at' => date('Y-m-d H:i:s'),
+							'code' => $this->input->post('code'),
+							'subcategory_id' => $this->input->post('subcategory_id'),
+							'institute_id' => $this->input->post('institute_id'),
+							'nik' => $this->input->post('nik'),
+							'file_number' => $this->input->post('file_number'),
+							'reference_number' => $this->input->post('reference_number'),
+							'type' => $this->input->post('type'),
+							'date' => $this->input->post('date'),
+							'date_recieved' => $this->input->post('date_recieved'),
+							'about' => $this->input->post('about'),
+							'purpose' => $this->input->post('purpose'),
+							'remark' => $this->input->post('remark'),
+							'path' => $path
+						)
+					);
+				}
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
+			}
 		} else {
 			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
 		}

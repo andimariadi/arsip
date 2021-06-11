@@ -26,7 +26,8 @@
         <div class="col-lg-5 col-md-7">
           <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
-              <form role="form" method="POST" action="<?= base_url('auth/action_login');?>">
+              <?= $this->session->flashdata('msg');?>
+              <form role="form" method="POST" action="<?= base_url('auth/action_visitor');?>">
                 <div class="form-group mb-3">
                   <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
@@ -40,15 +41,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Nama Lengkap" type="text" name="fullname" required="true" autocomplete="off" />
-                  </div>
-                </div>
-                <div class="form-group mb-3">
-                  <div class="input-group input-group-merge input-group-alternative">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-square-pin"></i></span>
-                    </div>
-                    <textarea class="form-control" name="address" placeholder="Alamat Lengkap"></textarea>
+                    <input class="form-control" placeholder="Nama Lengkap" type="text" name="full_name" required="true" autocomplete="off" />
                   </div>
                 </div>
 
@@ -57,29 +50,38 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="ni ni-tag"></i></span>
                     </div>
-                    <select class="form-control">
-                      <option>....</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                    <select class="form-control" name="utility">
+                      <option value="">Pilih salah satu</option>
+                      <?php
+                      foreach ($data_subcategory as $value) {
+                        echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+                      }?>
                     </select>
                   </div>
                 </div>
+
                 <div class="form-group">
                   <div class="input-group input-group-merge input-group-alternative">
                     <div class="input-group-prepend">
-                      <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                      <span class="input-group-text"><i class="ni ni-istanbul"></i></span>
                     </div>
-                    <input class="form-control" placeholder="Password" type="password" name="password" required="true" />
+                    <select class="form-control" name="institute_id">
+                      <option value="">Pilih salah satu</option>
+                      <?php
+                      foreach ($data_institute as $value) {
+                        echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+                      }?>
+                    </select>
                   </div>
                 </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                  <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="remember">
-                  <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                  </label>
+
+                <div class="form-group mb-3">
+                  <div class="input-group input-group-merge input-group-alternative">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="ni ni-square-pin"></i></span>
+                    </div>
+                    <textarea class="form-control" name="address" placeholder="Alamat Lengkap"></textarea>
+                  </div>
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary my-4">Simpan</button>

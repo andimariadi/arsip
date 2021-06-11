@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Delete extends CI_Controller {
 
-	private $per_page = 1;
 	function __construct() {
 		parent::__construct();
 	}
@@ -127,6 +126,132 @@ class Delete extends CI_Controller {
 			if ($check_data->num_rows() > 0) {
 				
 				$this->desccategory->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function institute()
+	{
+		$this->load->model('Institute_model', 'institute');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->institute->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->institute->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function mail_inbox()
+	{
+		$this->load->model('Inbox_model', 'inbox');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->inbox->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->inbox->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function mail_outbox()
+	{
+		$this->load->model('Outbox_model', 'outbox');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->outbox->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->outbox->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function guest_book()
+	{
+		$this->load->model('Guestbook_model', 'guestbook');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->guestbook->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->guestbook->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function archive()
+	{
+		$this->load->model('Archives_model', 'archives');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->archives->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->archives->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function disposition()
+	{
+		$this->load->model('Disposition_model', 'disposition');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->disposition->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->disposition->delete( $this->input->post('id') );
 				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
 				
 			} else {
