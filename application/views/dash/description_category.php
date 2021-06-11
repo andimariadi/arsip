@@ -122,9 +122,7 @@
 
             <div class="form-group">
               <label>Keterangan</label>
-              <textarea name="remark" id="editor" placeholder="Keterangan" class="form-control">
-                
-              </textarea>
+              <textarea name="remark" id="editor" placeholder="Keterangan" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -181,9 +179,7 @@
 
             <div class="form-group">
               <label>Keterangan</label>
-              <textarea name="remark" id="editor-edit" placeholder="Keterangan" class="form-control">
-                
-              </textarea>
+              <textarea name="remark" id="editor-edit" placeholder="Keterangan" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -218,21 +214,6 @@
 
   <?php permission_delete( $this->component->delete( base_url('Delete/description_category') ) );?>
 
-  <script src="<?= base_url('assets/vendor/ckeditor5/ckeditor.js');?>"></script>
-  <script type="text/javascript">
-    ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    ClassicEditor
-            .create( document.querySelector( '#editor-edit' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-  </script>
-
-
 <!-- MODAL BOOTSTRAP SCRIPT -->
 
 <script type="text/javascript">
@@ -244,6 +225,7 @@
     var area = button.data('area');
     var user = button.data('user');
     var time_minutes = button.data('time_minutes');
+    var remark = button.data('remark');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id);
     modal.find('.modal-body select[name=subcategory_id]').val(subcategory_id);
@@ -251,6 +233,7 @@
     modal.find('.modal-body input[name=area]').val(area);
     modal.find('.modal-body select[name=user]').val(user);
     modal.find('.modal-body input[name=time_minutes]').val(time_minutes);
+    modal.find('.modal-body input[name=remark]').val(remark);
   });
 
   $('#deleteModal').on('show.bs.modal', function (event) {

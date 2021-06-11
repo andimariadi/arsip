@@ -66,7 +66,7 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                      <?= permission_update('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#updateModal" data-id="'.$value['id'].'" data-number="'.$value['number'].'" data-title="'.$value['title'].'">Update</a>');?>
+                      <?= permission_update('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#updateModal" data-id="'.$value['id'].'" data-number="'.$value['number'].'" data-title="'.$value['title'].'" data-description="'.$value['description'].'">Update</a>');?>
                       <?= permission_delete('<a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteModal" data-id="'.$value['id'].'">Delete</a>');?>                   
                     </div>
                   </div>
@@ -113,9 +113,7 @@
 
             <div class="form-group">
               <label>Keterangan</label>
-              <textarea name="description" id="editor" placeholder="Keterangan" class="form-control">
-                
-              </textarea>
+              <textarea name="description" id="editor" placeholder="Keterangan" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -161,9 +159,7 @@
 
             <div class="form-group">
               <label>Keterangan</label>
-              <textarea name="description" id="editor-edit" placeholder="Keterangan" class="form-control">
-                
-              </textarea>
+              <textarea name="description" id="editor-edit" placeholder="Keterangan" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
@@ -184,33 +180,18 @@
   </div>');?>
   <?php permission_delete( $this->component->delete( base_url('Delete/archive') ) );?>
 
-  <script src="<?= base_url('assets/vendor/ckeditor5/ckeditor.js');?>"></script>
-  <script type="text/javascript">
-    ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-    ClassicEditor
-            .create( document.querySelector( '#editor-edit' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-  </script>
-
-
 <script type="text/javascript">
   $('#updateModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget);
     var id = button.data('id');
     var number = button.data('number');
     var title = button.data('title');
-    // var description = button.data('description');
-    var expired_at = button.data('expired_at');
+    var description = button.data('description');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id);
     modal.find('.modal-body input[name=number]').val(number);
     modal.find('.modal-body input[name=title]').val(title);
+    modal.find('.modal-body input[name=description]').val(description);
   });
 
   $('#deleteModal').on('show.bs.modal', function (event) {
