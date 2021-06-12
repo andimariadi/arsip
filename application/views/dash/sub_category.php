@@ -107,6 +107,7 @@
               <label>Category</label>
               <select class="form-control" name="category_id">'.$category.'
               </select>
+              <small id="emailHelp" class="form-text text-muted"><a href="'.base_url('dash/category').'">Klik disini</a> untuk tambah data.</small>
             </div>
 
             <div class="form-group">

@@ -6,15 +6,17 @@ class Guestbook_model extends CI_Model
 	public function view()
 	{
 		$this->db->where('deleted_at', NULL);
+		$this->db->where(array('YEAR(guest_book.date)' => date('Y'), 'MONTH(guest_book.date)' => date('m')));
 		return $this->db->get('guest_book');
 	}
 
 	public function getData($start, $limit)
 	{
 		$this->db->select('guest_book.*, institute.name as institute_description, subcategory.name as utility_description');
-		$this->db->where('guest_book.deleted_at', NULL);
 		$this->db->join('institute', 'institute.id = guest_book.institute_id', 'left');
-		$this->db->join('subcategory', 'subcategory.id = guest_book.utility', 'left');
+		$this->db->join('subcategory', 'subcategory.id = guest_book.utility', 'left');		
+		$this->db->where(array('YEAR(guest_book.date)' => date('Y'), 'MONTH(guest_book.date)' => date('m')));
+		$this->db->where('guest_book.deleted_at', NULL);
 		$this->db->limit($limit, $start);
 		return $this->db->get('guest_book');
 	}
@@ -44,5 +46,38 @@ class Guestbook_model extends CI_Model
 			'deleted_at' => date('Y-m-d H:i:s'),
 		);
 		return $this->db->update('guest_book', $data);
+	}
+
+	public function getReport($start, $limit, $start_date, $end_date)
+	{
+		$this->db->select('guest_book.*, institute.name as institute_description, subcategory.name as utility_description');
+		$this->db->join('institute', 'institute.id = guest_book.institute_id', 'left');
+		$this->db->join('subcategory', 'subcategory.id = guest_book.utility', 'left');
+		$this->db->where('guest_book.deleted_at', NULL);
+		$this->db->where('guest_book.date >=', $start_date);
+		$this->db->where('guest_book.date <=', $end_date);
+		$this->db->limit($limit, $start);
+		return $this->db->get('guest_book');
+	}
+
+	public function getReportTotal($start_date, $end_date)
+	{
+		$this->db->select('guest_book.*, institute.name as institute_description, subcategory.name as utility_description');
+		$this->db->join('institute', 'institute.id = guest_book.institute_id', 'left');
+		$this->db->join('subcategory', 'subcategory.id = guest_book.utility', 'left');
+		$this->db->where('guest_book.deleted_at', NULL);
+		$this->db->where('guest_book.date >=', $start_date);
+		$this->db->where('guest_book.date <=', $end_date);
+		return $this->db->get('guest_book');
+	}
+
+	public function getAll()
+	{
+		$this->db->select('guest_book.*, institute.name as institute_description, subcategory.name as utility_description');
+		$this->db->join('institute', 'institute.id = guest_book.institute_id', 'left');
+		$this->db->join('subcategory', 'subcategory.id = guest_book.utility', 'left');		
+		$this->db->where(array('YEAR(guest_book.date)' => date('Y'), 'MONTH(guest_book.date)' => date('m')));
+		$this->db->where('guest_book.deleted_at', NULL);
+		return $this->db->get('guest_book');
 	}
 }

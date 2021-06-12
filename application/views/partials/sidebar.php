@@ -111,16 +111,22 @@
             <span class="docs-normal">Laporan</span>
           </h6>
           <ul class="navbar-nav">
-            <?= permission_menu_restrict('workers', '<li class="nav-item">
-              <a class="nav-link" href="' . base_url('dash/#') . '">
+            <?= permission_menu_restrict('report_mail_inbox', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/mail_inbox') . '">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
                 <span class="nav-link-text">Surat Masuk</span>
               </a>
             </li>');?>
-            <?= permission_menu_restrict('workers', '<li class="nav-item">
-              <a class="nav-link" href="' . base_url('dash/#') . '">
+            <?= permission_menu_restrict('report_mail_outbox', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/mail_outbox') . '">
                 <i class="ni ni-bullet-list-67 text-info"></i>
                 <span class="nav-link-text">Surat Keluar</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_guest_book', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/guest_book') . '">
+                <i class="ni ni-bullet-list-67 text-warning"></i>
+                <span class="nav-link-text">Buku Tamu</span>
               </a>
             </li>');?>
           </ul>

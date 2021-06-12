@@ -11,7 +11,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/mail_inbox').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>
@@ -59,7 +59,7 @@
                   <?= $value['date'];?>
                 </td>
                 <td>
-                  <?= $value['category_id'];?>
+                  <?= $value['category_description'];?>
                 </td>
                 <td>
                   <?= $value['about'];?>
@@ -68,7 +68,7 @@
                   <?= $value['type'];?>
                 </td>
                 <td>
-                  <?= $value['institute_id'];?>
+                  <?= $value['institute_description'];?>
                 </td>
                 <td>
                   <?php if ( file_exists($value['document']) ) : ?>
@@ -132,12 +132,14 @@
               <select class="form-control" name="institute_id">
                 '.$institute.'
               </select>
+              <small id="emailHelp" class="form-text text-muted"><a href="'.base_url('dash/institute').'">Klik disini</a> untuk tambah data.</small>
             </div>
             <div class="form-group">
               <label>Category</label>
               <select class="form-control" name="category_id">
                 '.$category.'
               </select>
+              <small id="emailHelp" class="form-text text-muted"><a href="'.base_url('dash/sub_category').'">Klik disini</a> untuk tambah data.</small>
             </div>
             <div class="row"><div class="col-md-6">
             
