@@ -10,7 +10,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/sub_category').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>
@@ -34,7 +34,7 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col">ID Sub kategory</th>
+                <th scope="col">ID Kategory</th>
                 <th scope="col">Nomor</th>
                 <th scope="col">Nama</th>
                 <th scope="col">Keterangan</th>

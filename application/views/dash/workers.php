@@ -12,7 +12,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/workers').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>
@@ -36,12 +36,12 @@
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
-                <th scope="col" class="sort" data-sort="name">NIK</th>
-                <th scope="col" class="sort" data-sort="budget">Nama Lengkap</th>
-                <th scope="col" class="sort" data-sort="status">Jenis Kelamin</th>
+                <th scope="col">NIK</th>
+                <th scope="col">Nama Lengkap</th>
+                <th scope="col">Jenis Kelamin</th>
                 <th scope="col">Telp</th>
-                <th scope="col" class="sort" data-sort="completion">Alamat</th>
-                <th scope="col" class="sort" data-sort="completion">Gambar</th>
+                <th scope="col">Alamat</th>
+                <th scope="col">Gambar</th>
                 <th scope="col"></th>
               </tr>
             </thead>

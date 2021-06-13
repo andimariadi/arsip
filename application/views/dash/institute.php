@@ -11,7 +11,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/institute').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>
@@ -47,7 +47,7 @@
                 <th scope="row">
                   <?= $value['code'];?>
                 </th>
-                <td class="budget">
+                <td>
                   <?= strtoupper($value['name']);?>
                 </td>
                 <td>

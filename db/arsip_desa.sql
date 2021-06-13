@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 11, 2021 at 02:26 PM
+-- Generation Time: Jun 13, 2021 at 12:27 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
@@ -102,6 +102,7 @@ CREATE TABLE `disposition` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
+  `date` date NOT NULL,
   `code` varchar(25) NOT NULL,
   `subcategory_id` int(10) NOT NULL,
   `institute_id` int(10) NOT NULL,
@@ -109,7 +110,6 @@ CREATE TABLE `disposition` (
   `file_number` varchar(50) NOT NULL,
   `reference_number` varchar(50) NOT NULL,
   `type` varchar(250) NOT NULL,
-  `date` date NOT NULL,
   `date_recieved` date NOT NULL,
   `about` text NOT NULL,
   `purpose` text NOT NULL,
@@ -256,7 +256,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `deleted_at`, `username`, `password`, `full_name`, `level`, `data_create`, `data_read`, `data_update`, `data_delete`, `data_export`, `restrict`) VALUES
 (1, '2021-06-10 09:00:35', '2021-06-10 09:57:25', NULL, 'admin', '$2y$10$H3ao.GXNqHYQL79nZ0p9LuGUb9euaQ6AYlCZyxgeVG7fDYzZN/R1K', 'ADMINISTRATOR', 'administrator', 'true', 'true', 'true', 'true', 'true', ''),
-(2, '2021-06-10 09:00:35', '2021-06-10 15:17:48', NULL, 'user', '$2y$10$csXV8PQ2p/FaYcqtLWCcTuzh26ADzBDX5cJLtpj9gFqJiRH5VNSt2', 'USER DEMO', 'user', 'false', 'true', 'false', 'false', 'false', 'users,category,sub_category');
+(2, '2021-06-10 09:00:35', '2021-06-13 12:19:01', NULL, 'user', '$2y$10$csXV8PQ2p/FaYcqtLWCcTuzh26ADzBDX5cJLtpj9gFqJiRH5VNSt2', 'USER DEMO', 'user', 'false', 'true', 'true', 'false', 'false', 'description_category,archive,guest_book,disposition,users');
 
 -- --------------------------------------------------------
 

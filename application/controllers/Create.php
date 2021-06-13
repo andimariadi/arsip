@@ -6,6 +6,10 @@ class Create extends CI_Controller {
 	private $per_page = 1;
 	function __construct() {
 		parent::__construct();
+		$username 	= $this->session->userdata('username');
+		if (!$username) {
+			redirect(base_url('Auth'));
+		}
 	}
 
 	public function users()

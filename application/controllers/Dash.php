@@ -6,11 +6,31 @@ class Dash extends CI_Controller {
 	private $per_page = 10;
 	function __construct() {
 		parent::__construct();
+		$username 	= $this->session->userdata('username');
+		if (!$username) {
+			redirect(base_url('Auth'));
+		}
 		$this->load->library(array('template', 'component') );
 	}
 	public function index()
 	{
-		$this->template->load('Dashboard','dash/home');
+		$this->load->model('Guestbook_model', 'guestbook');
+		$this->load->model('Inbox_model', 'inbox');
+		$this->load->model('Outbox_model', 'outbox');
+		$this->load->model('Archives_model', 'archives');
+
+
+		$data['total_guestbook'] 	= $this->guestbook->viewAll()->num_rows();
+		$data['month_guestbook'] 	= $this->guestbook->view()->num_rows();
+		$data['total_inbox'] 		= $this->inbox->viewAll()->num_rows();
+		$data['month_inbox'] 		= $this->inbox->view()->num_rows();
+		$data['total_outbox'] 		= $this->outbox->viewAll()->num_rows();
+		$data['month_outbox'] 		= $this->outbox->view()->num_rows();
+		$data['total_archives'] 	= $this->archives->view()->num_rows();
+		$data['month_archives'] 	= $this->archives->viewThisMonth()->num_rows();
+		
+
+		$this->template->load('Dashboard','dash/home', $data);
 	}
 
 	public function users($page = 1)

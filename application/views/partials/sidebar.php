@@ -4,7 +4,7 @@
     <div class="scrollbar-inner">
       <!-- Brand -->
       <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
+        <a class="navbar-brand" href="#">
           <img src="<?= base_url('assets/img/brand/blue.png');?>" class="navbar-brand-img" alt="...">
         </a>
       </div>
@@ -20,11 +20,18 @@
               </a>
             </li>
           </ul>
-          <!-- Divider -->
+          <?php if(
+            permission_menu_restrict('guest_book', 'true') != '' ||
+            permission_menu_restrict('mail_inbox', 'true') != '' ||
+            permission_menu_restrict('mail_outbox', 'true') != '' ||
+            permission_menu_restrict('disposition', 'true') != '' ||
+            permission_menu_restrict('archive', 'true') != ''
+          ) : ?>
           <hr class="my-3">
           <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Data Arsip</span>
           </h6>
+          <?php endif;?>
           <ul class="navbar-nav">
             <?= permission_menu_restrict('guest_book', '
             <li class="nav-item">
@@ -33,35 +40,46 @@
                 <span class="nav-link-text">Buku Tamu</span>
               </a>
             </li>');?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/mail_inbox');?>">
+            <?= permission_menu_restrict('mail_inbox', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/mail_inbox') . '">
                 <i class="ni ni-email-83 text-default"></i>
                 <span class="nav-link-text">Surat Masuk</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/mail_outbox');?>">
+            </li>');?>
+            <?= permission_menu_restrict('mail_outbox', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/mail_outbox') . '">
                 <i class="ni ni-send text-info"></i>
                 <span class="nav-link-text">Surat Keluar</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/disposition');?>">
+            </li>');?>
+            <?= permission_menu_restrict('disposition', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/disposition') . '">
                 <i class="ni ni-support-16 text-danger"></i>
                 <span class="nav-link-text">Disposisi</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url('dash/archive');?>">
+            </li>');?>
+            <?= permission_menu_restrict('archive', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/archive') . '">
                 <i class="ni ni-collection text-warning"></i>
                 <span class="nav-link-text">Arsip surat</span>
               </a>
-            </li>
+            </li>');?>
           </ul>
+
+          <?php if(
+            permission_menu_restrict('workers', 'true') != '' ||
+            permission_menu_restrict('users', 'true') != '' ||
+            permission_menu_restrict('notice', 'true') != '' ||
+            permission_menu_restrict('category', 'true') != '' ||
+            permission_menu_restrict('sub_category', 'true') != '' ||
+            permission_menu_restrict('description_category', 'true') != '' ||
+            permission_menu_restrict('institute', 'true') != ''
+          ) : ?>
           <hr class="my-3">
           <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Data Master</span>
           </h6>
+          <?php endif;?>
           <ul class="navbar-nav">
             <?= permission_menu_restrict('workers', '<li class="nav-item">
               <a class="nav-link" href="' . base_url('dash/workers') . '">
@@ -106,11 +124,28 @@
               </a>
             </li>');?>
           </ul>
+
+          <?php if(
+            permission_menu_restrict('report_guest_book', 'true') != '' ||
+            permission_menu_restrict('report_mail_inbox', 'true') != '' ||
+            permission_menu_restrict('report_mail_outbox', 'true') != '' ||
+            permission_menu_restrict('report_disposition', 'true') != ''
+          ) : ?>
+
           <hr class="my-3">
           <h6 class="navbar-heading p-0 text-muted">
             <span class="docs-normal">Laporan</span>
           </h6>
+
+          <?php endif;?>
+
           <ul class="navbar-nav">
+            <?= permission_menu_restrict('report_guest_book', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/guest_book') . '">
+                <i class="ni ni-bullet-list-67 text-warning"></i>
+                <span class="nav-link-text">Buku Tamu</span>
+              </a>
+            </li>');?>
             <?= permission_menu_restrict('report_mail_inbox', '<li class="nav-item">
               <a class="nav-link" href="' . base_url('report/mail_inbox') . '">
                 <i class="ni ni-bullet-list-67 text-primary"></i>
@@ -123,10 +158,10 @@
                 <span class="nav-link-text">Surat Keluar</span>
               </a>
             </li>');?>
-            <?= permission_menu_restrict('report_guest_book', '<li class="nav-item">
-              <a class="nav-link" href="' . base_url('report/guest_book') . '">
-                <i class="ni ni-bullet-list-67 text-warning"></i>
-                <span class="nav-link-text">Buku Tamu</span>
+            <?= permission_menu_restrict('report_disposition', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/disposition') . '">
+                <i class="ni ni-bullet-list-67 text-danger"></i>
+                <span class="nav-link-text">Surat Disposisi</span>
               </a>
             </li>');?>
           </ul>
@@ -160,23 +195,7 @@
                 <div class="dropdown-header noti-title">
                   <h6 class="text-overflow m-0">Welcome!</h6>
                 </div>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-single-02"></i>
-                  <span>My profile</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-settings-gear-65"></i>
-                  <span>Settings</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-calendar-grid-58"></i>
-                  <span>Activity</span>
-                </a>
-                <a href="#!" class="dropdown-item">
-                  <i class="ni ni-support-16"></i>
-                  <span>Support</span>
-                </a>
-                <div class="dropdown-divider"></div>
+                
                 <a href="<?= base_url('auth/logout');?>" class="dropdown-item">
                   <i class="ni ni-user-run"></i>
                   <span>Logout</span>

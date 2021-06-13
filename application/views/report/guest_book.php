@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
+        <div class="col-lg-8 col-8">
           <div class="card" style="margin: 0;">
             <div class="card-body">
               <form method="GET">
@@ -95,7 +95,7 @@
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/guest_book/')
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('report/guest_book/?start_date='.$start_date.'&end_date='.$end_date.'&page=')
           )
         );?>
       </div>
@@ -113,7 +113,7 @@
     $institute .= '<option value="' . $value['id'] . '">' . $value['name'] . '</option>';
   }
 
-  permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+  echo permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered" role="document">
       <div class="modal-content">
         <form method="POST" action="' . base_url('update/guest_book') . '" enctype="multipart/form-data">

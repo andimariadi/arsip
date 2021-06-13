@@ -11,7 +11,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/description_category').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>

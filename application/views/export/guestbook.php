@@ -15,7 +15,7 @@ $pdf->SetSubject('Laporan Buku Tamu');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
 // set default header data
-$pdf->SetHeaderData(base_url('assets/img/icons/bartim.jpg'), 10, 'Laporan Buku Tamu', "Alamat: Banyu landas RT. 01, Benua Lima, Kalimantan Tengah\n{$tanggal}", array(0,0,0), array(0,0,0));
+$pdf->SetHeaderData('assets/img/icons/bartim.jpg', 10, 'Laporan Buku Tamu', "Alamat: Banyu landas RT. 01, Benua Lima, Kalimantan Tengah\n{$tanggal}", array(0,0,0), array(0,0,0));
 $pdf->setFooterData(array(0,0,0), array(0,0,0));
 
 // set header and footer fonts
@@ -63,7 +63,19 @@ $html='<style> table {border-collapse: collapse; width: 100%; font-size: 11px; }
         </tr>';
     endforeach;
 $html.='</tbody>
-</table>';
+</table>
+<br /><br />
+
+<table>
+    <tbody>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col" align="center">Mengetahui,<br />Kepala Desa Banyu Landas<br /><br /><br /><br /><br />
+<br />
+BAHRAN
+        </th>
+      </tr>
+    </tbody>';
 
 
 $pdf->writeHTML($html, true, false, true, false, '');

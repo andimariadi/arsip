@@ -11,7 +11,7 @@
             New
           </a>');?>
           <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
+          <a href="'.base_url('export/disposition').'" class="btn btn-sm btn-neutral">
             <span class="ni ni-send"></span>
             Export
           </a>');?>
@@ -58,7 +58,7 @@
                   <?= $value['code'];?>
                 </th>
                 <td>
-                  <?= $value['institute_id'];?>
+                  <?= $value['institute_description'];?>
                 </td>
                 <td>
                   <?= $value['nik'];?>
@@ -79,7 +79,7 @@
                   <?= $value['about'];?>
                 </td>
                 <td>
-                  <?= $value['subcategory_id'];?>
+                  <?= $value['subcategory_description'];?>
                 </td>
                 <td>
                   <?= $value['purpose'];?>

@@ -10,11 +10,9 @@
             <span class="ni ni-fat-add"></span>
             New
           </a>');?>
-          <?= permission_export('
-          <a href="#" class="btn btn-sm btn-neutral">
-            <span class="ni ni-send"></span>
-            Export
-          </a>');?>
+          <?php 
+          // echo permission_export('<a href="#" class="btn btn-sm btn-neutral"> <span class="ni ni-send"></span> Export </a>');
+          ?>
         </div>
       </div>
     </div>
@@ -244,18 +242,22 @@
               <label>Restrict Menu</label>
               <select class="form-control" name="restrict[]" multiple="true">
                 <option value="">Tidak ada</option>
-                <option value="guest_book">Buku Tamu</option>
-                <option value="mail_inbox">Surat Masuk</option>
-                <option value="mail_outbox">Surat Keluar</option>
-                <option value="disposition">Disposis</option>
-                <option value="archive">Surat-Surat</option>
-                <option value="workers">Karyawan</option>
-                <option value="users">Users</option>
-                <option value="notice">Pengunguman</option>
-                <option value="category">Kategory Surat</option>
-                <option value="sub_category">Sub Kategory Surat</option>
                 <option value="description_category">Arahan</option>
+                <option value="archive">Arsip surat</option>
+                <option value="guest_book">Buku Tamu</option>
+                <option value="disposition">Disposisi</option>
                 <option value="institute">Instansi</option>
+                <option value="workers">Karyawan</option>
+                <option value="category">Kategory Surat</option>
+                <option value="notice">Pengunguman</option>
+                <option value="sub_category">Sub Kategory Surat</option>
+                <option value="mail_outbox">Surat Keluar</option>
+                <option value="mail_inbox">Surat Masuk</option>
+                <option value="report_guest_book">Report Buku Tamu</option>
+                <option value="report_disposition">Report Surat Disposisi</option>
+                <option value="report_mail_outbox">Report Surat Keluar</option>
+                <option value="report_mail_inbox">Report Surat Masuk</option>
+                <option value="users">Users</option>
               </select>
               <small class="form-text text-muted"> Tekan CTRL untuk memilih lebih banyak. </small>
             </div>
@@ -365,18 +367,22 @@
               <label>Restrict Menu</label>
               <select class="form-control" name="restrict[]" multiple="true" id="restrict">
                 <option value="">Tidak ada</option>
-                <option value="guest_book">Buku Tamu</option>
-                <option value="mail_inbox">Surat Masuk</option>
-                <option value="mail_outbox">Surat Keluar</option>
-                <option value="disposition">Disposis</option>
-                <option value="archive">Surat-Surat</option>
-                <option value="workers">Karyawan</option>
-                <option value="users">Users</option>
-                <option value="notice">Pengunguman</option>
-                <option value="category">Kategory Surat</option>
-                <option value="sub_category">Sub Kategory Surat</option>
                 <option value="description_category">Arahan</option>
+                <option value="archive">Arsip surat</option>
+                <option value="guest_book">Buku Tamu</option>
+                <option value="disposition">Disposisi</option>
                 <option value="institute">Instansi</option>
+                <option value="workers">Karyawan</option>
+                <option value="category">Kategory Surat</option>
+                <option value="notice">Pengunguman</option>
+                <option value="sub_category">Sub Kategory Surat</option>
+                <option value="mail_outbox">Surat Keluar</option>
+                <option value="mail_inbox">Surat Masuk</option>
+                <option value="report_guest_book">Report Buku Tamu</option>
+                <option value="report_disposition">Report Surat Disposisi</option>
+                <option value="report_mail_outbox">Report Surat Keluar</option>
+                <option value="report_mail_inbox">Report Surat Masuk</option>
+                <option value="users">Users</option>
               </select>
               <small class="form-text text-muted"> Tekan CTRL untuk memilih lebih banyak. </small>
             </div>

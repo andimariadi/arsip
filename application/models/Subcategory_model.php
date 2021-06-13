@@ -44,4 +44,12 @@ class Subcategory_model extends CI_Model
 		);
 		return $this->db->update('subcategory', $data);
 	}
+
+	public function getAll()
+	{
+		$this->db->select('subcategory.*, category.name as category_description');
+		$this->db->where('subcategory.deleted_at', NULL);
+		$this->db->join('category', 'category.id = subcategory.category_id', 'left');
+		return $this->db->get('subcategory');
+	}
 }

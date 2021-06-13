@@ -10,6 +10,12 @@ class Inbox_model extends CI_Model
 		return $this->db->get('mail_inbox');
 	}
 
+	public function viewAll()
+	{
+		$this->db->where('mail_inbox.deleted_at', NULL);
+		return $this->db->get('mail_inbox');
+	}
+
 	public function getData($start, $limit)
 	{
 		$this->db->select('mail_inbox.*, institute.name as institute_description, subcategory.name as category_description');

@@ -10,6 +10,12 @@ class Guestbook_model extends CI_Model
 		return $this->db->get('guest_book');
 	}
 
+	public function viewAll()
+	{
+		$this->db->where('guest_book.deleted_at', NULL);
+		return $this->db->get('guest_book');
+	}
+
 	public function getData($start, $limit)
 	{
 		$this->db->select('guest_book.*, institute.name as institute_description, subcategory.name as utility_description');

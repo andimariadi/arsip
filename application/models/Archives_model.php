@@ -9,6 +9,13 @@ class Archives_model extends CI_Model
 		return $this->db->get('archives');
 	}
 
+	public function viewThisMonth()
+	{
+		$this->db->where('deleted_at', NULL);
+		$this->db->where(array('YEAR(archives.created_at)' => date('Y'), 'MONTH(archives.created_at)' => date('m')));
+		return $this->db->get('archives');
+	}
+
 	public function getData($start, $limit)
 	{
 		$this->db->where('deleted_at', NULL);

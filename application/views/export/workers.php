@@ -1,7 +1,7 @@
 <?php
-$tanggal = 'Tanggal : ' . date('d F Y', strtotime($start_date));
+$tanggal = 'Tanggal : ' . date('F Y', strtotime($start_date));
 if($start_date != $end_date) {
-    $tanggal = 'Tanggal : ' . date('d F Y', strtotime($start_date)) . ' sampai ' . date('d F Y', strtotime($end_date)) ;
+    $tanggal = 'Tanggal : ' . date('F Y', strtotime($start_date)) . ' sampai ' . date('F Y', strtotime($end_date)) ;
 }
 
 // set document information
@@ -10,12 +10,12 @@ $pdf = new TCPDF("L", PDF_UNIT, 'A4', true, 'UTF-8', false);
 // set document information
 $pdf->SetCreator('Desa Banyu Landas');
 $pdf->SetAuthor('Desa Banyu Landas');
-$pdf->SetTitle('Laporan surat masuk');
-$pdf->SetSubject('Laporan surat masuk');
+$pdf->SetTitle('Laporan Karyawan');
+$pdf->SetSubject('Laporan Karyawan');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
 // set default header data
-$pdf->SetHeaderData('assets/img/icons/bartim.jpg', 10, 'Laporan Surat Masuk', "Alamat: Banyu landas RT. 01, Benua Lima, Kalimantan Tengah\n{$tanggal}", array(0,0,0), array(0,0,0));
+$pdf->SetHeaderData('assets/img/icons/bartim.jpg', 10, 'Laporan Karyawan', "Alamat: Banyu landas RT. 01, Benua Lima, Kalimantan Tengah", array(0,0,0), array(0,0,0));
 $pdf->setFooterData(array(0,0,0), array(0,0,0));
 
 // set header and footer fonts
@@ -43,27 +43,23 @@ $html='<style> table {border-collapse: collapse; width: 100%; font-size: 11px; }
 <table border="1">
     <thead>
       <tr>
-        <th scope="col">Kode</th>
-        <th scope="col">Nomor</th>
-        <th scope="col">Tanggal</th>
-        <th scope="col">Kategory</th>
-        <th scope="col">Perihal</th>
-        <th scope="col">Jenis Surat</th>
-        <th scope="col">Institusi</th>
-        <th scope="col">Document</th>
+        <th scope="col">NIK</th>
+        <th scope="col">Nama Lengkap</th>
+        <th scope="col">Jenis Kelamin</th>
+        <th scope="col">Telp</th>
+        <th scope="col">Alamat</th>
+        <th scope="col">Gambar</th>
       </tr>
     </thead>
     <tbody class="list">';
-    foreach ($data_inbox as $value) : 
+    foreach ($data_worker as $value) : 
         $html .= '<tr>
-            <th scope="row">' . $value['code'] . '</th>
-            <td>' . $value['number'] . '</td>
-            <td>' . $value['date'] . '</td>
-            <td>' . $value['category_description'] . '</td>
-            <td>' . $value['about'] . '</td>
-            <td>' . $value['type'] . '</td>
-            <td>' . $value['institute_description'] . '</td>
-            <td><a href="' . base_url($value['document']) . '" class="btn btn-primary btn-sm"><span class="ni ni-cloud-download-95"></span> Download</a></td>
+            <th scope="row">' . $value['nik'] . '</th>
+            <td>' . $value['full_name'] . '</td>
+            <td>' . $value['gender'] . '</td>
+            <td>' . $value['telp'] . '</td>
+            <td>' . $value['address'] . '</td>
+            <td><img alt="Image placeholder" src="' . base_url($value['image']) . '"></td>
         </tr>';
     endforeach;
 $html.='</tbody>
@@ -83,9 +79,5 @@ BAHRAN
 
 
 $pdf->writeHTML($html, true, false, true, false, '');
-            $pdf->Output( 'Laporan Surat Masuk.pdf', 'I');
-        ?>
-
-
-              
-            
+$pdf->Output( 'Laporan Karyawan.pdf', 'I');
+?>

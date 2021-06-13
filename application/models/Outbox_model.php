@@ -10,6 +10,12 @@ class Outbox_model extends CI_Model
 		return $this->db->get('mail_outbox');
 	}
 
+	public function viewAll()
+	{
+		$this->db->where('mail_outbox.deleted_at', NULL);
+		return $this->db->get('mail_outbox');
+	}
+
 	public function getData($start, $limit)
 	{
 		$this->db->select('mail_outbox.*, institute.name as institute_description, subcategory.name as category_description');
