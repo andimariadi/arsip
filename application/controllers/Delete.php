@@ -267,4 +267,25 @@ class Delete extends CI_Controller {
 		
 		redirect($_SERVER['HTTP_REFERER']);
 	}
+
+	public function archive_sk()
+	{
+		$this->load->model('Archives_sk_model', 'archives');
+		$this->form_validation->set_rules('id', 'id', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->archives->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() > 0) {
+				
+				$this->archives->delete( $this->input->post('id') );
+				$this->session->set_flashdata('msg', '<div class="alert alert-warning" role="alert"> <strong>Success!</strong> Data berhasil dihapus!</div>' );
+				
+			} else {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Data tidak ditemukan!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
 }

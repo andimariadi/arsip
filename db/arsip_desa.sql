@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jun 13, 2021 at 12:27 PM
+-- Host: localhost
+-- Generation Time: Jul 02, 2021 at 04:05 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -36,6 +35,27 @@ CREATE TABLE `archives` (
   `path` varchar(250) NOT NULL,
   `number` varchar(100) NOT NULL,
   `title` varchar(250) NOT NULL,
+  `description` varchar(250) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `archives_sk`
+--
+
+CREATE TABLE `archives_sk` (
+  `id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `path` varchar(250) NOT NULL,
+  `number` varchar(100) NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `nik` int(50) NOT NULL,
+  `sk_number` varchar(50) NOT NULL,
+  `start_date` date NOT NULL,
+  `expired_date` date NOT NULL,
   `description` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
@@ -102,7 +122,6 @@ CREATE TABLE `disposition` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   `deleted_at` datetime DEFAULT NULL,
-  `date` date NOT NULL,
   `code` varchar(25) NOT NULL,
   `subcategory_id` int(10) NOT NULL,
   `institute_id` int(10) NOT NULL,
@@ -110,6 +129,7 @@ CREATE TABLE `disposition` (
   `file_number` varchar(50) NOT NULL,
   `reference_number` varchar(50) NOT NULL,
   `type` varchar(250) NOT NULL,
+  `date` date NOT NULL,
   `date_recieved` date NOT NULL,
   `about` text NOT NULL,
   `purpose` text NOT NULL,
@@ -256,7 +276,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `created_at`, `updated_at`, `deleted_at`, `username`, `password`, `full_name`, `level`, `data_create`, `data_read`, `data_update`, `data_delete`, `data_export`, `restrict`) VALUES
 (1, '2021-06-10 09:00:35', '2021-06-10 09:57:25', NULL, 'admin', '$2y$10$H3ao.GXNqHYQL79nZ0p9LuGUb9euaQ6AYlCZyxgeVG7fDYzZN/R1K', 'ADMINISTRATOR', 'administrator', 'true', 'true', 'true', 'true', 'true', ''),
-(2, '2021-06-10 09:00:35', '2021-06-13 12:19:01', NULL, 'user', '$2y$10$csXV8PQ2p/FaYcqtLWCcTuzh26ADzBDX5cJLtpj9gFqJiRH5VNSt2', 'USER DEMO', 'user', 'false', 'true', 'true', 'false', 'false', 'description_category,archive,guest_book,disposition,users');
+(2, '2021-06-10 09:00:35', '2021-06-10 15:17:48', NULL, 'user', '$2y$10$csXV8PQ2p/FaYcqtLWCcTuzh26ADzBDX5cJLtpj9gFqJiRH5VNSt2', 'USER DEMO', 'user', 'false', 'true', 'false', 'false', 'false', 'users,category,sub_category');
 
 -- --------------------------------------------------------
 
@@ -285,6 +305,12 @@ CREATE TABLE `worker` (
 -- Indexes for table `archives`
 --
 ALTER TABLE `archives`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `archives_sk`
+--
+ALTER TABLE `archives_sk`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -367,6 +393,12 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `archives`
 --
 ALTER TABLE `archives`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `archives_sk`
+--
+ALTER TABLE `archives_sk`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --

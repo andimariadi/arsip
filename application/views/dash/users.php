@@ -157,7 +157,8 @@
 
                 <div class="form-group">
                   <label>Username</label>
-                  <input type="text" class="form-control" placeholder="Username" name="username">
+                  <input type="text" class="form-control" placeholder="Username" name="username" id="username">
+                  <div class="invalid-feedback w-100" id="forusername"></div>
                 </div>
                 
               </div>
@@ -244,6 +245,7 @@
                 <option value="">Tidak ada</option>
                 <option value="description_category">Arahan</option>
                 <option value="archive">Arsip surat</option>
+                <option value="archive_sk">Arsip SK</option>
                 <option value="guest_book">Buku Tamu</option>
                 <option value="disposition">Disposisi</option>
                 <option value="institute">Instansi</option>
@@ -444,5 +446,23 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
+  });
+
+
+  $(document).on('change', '#username', function(e) {
+    e.preventDefault();
+    var val = $(this);
+    $.ajax({
+      url: "<?= base_url('validation/users/');?>" + val.val(),
+    }).done(function(data) {
+      console.log(data);
+      if(data) {
+        $("#forusername").html(data);
+        val.attr('class', 'form-control is-invalid');
+      } else {
+        $("#forusername").html('');
+        val.attr('class', 'form-control');
+      }
+    });
   });
 </script>

@@ -636,4 +636,69 @@ class Update extends CI_Controller {
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function archive_sk()
+	{
+		$this->load->model('Archives_sk_model', 'archives');
+		$this->form_validation->set_rules('number', 'number', 'required');
+		$this->form_validation->set_rules('name', 'name', 'required');
+		$this->form_validation->set_rules('nik', 'nik', 'required');
+		$this->form_validation->set_rules('sk_number', 'sk_number', 'required');
+		$this->form_validation->set_rules('start_date', 'start_date', 'required');
+		$this->form_validation->set_rules('expired_date', 'expired_date', 'required');
+		$this->form_validation->set_rules('description', 'description', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->archives->where( array('id' => $this->input->post('id'), 'deleted_at'=> null ) );
+			if ($check_data->num_rows() === 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ID tidak ditemukan!</div>' );
+			} else {
+				$this->load->helper('Upload');
+
+				$target_path = makeDirectory('files');
+				$config['upload_path'] = $target_path;
+		        $config['allowed_types'] = 'pdf|doc|docx';
+		        $config['encrypt_name'] = true;
+
+		        $this->load->library('upload', $config);
+		        if ( ! $this->upload->do_upload('document')){
+		            $this->archives->update($this->input->post('id'),
+						array(
+							'updated_at' => date('Y-m-d H:i:s'),
+							'number' => $this->input->post('number'),
+							'name' => $this->input->post('name'),
+							'nik' => $this->input->post('nik'),
+							'sk_number' => $this->input->post('sk_number'),
+							'start_date' => $this->input->post('start_date'),
+							'expired_date' => $this->input->post('expired_date'),
+							'description' => $this->input->post('description'),
+						)
+					);
+				}else{
+
+					$uploadData = $this->upload->data(); 
+		            $filename = $uploadData['file_name'];
+
+		            $path = $target_path . $filename;
+		            $this->archives->update($this->input->post('id'),
+						array(
+							'updated_at' => date('Y-m-d H:i:s'),
+							'number' => $this->input->post('number'),
+							'name' => $this->input->post('name'),
+							'nik' => $this->input->post('nik'),
+							'sk_number' => $this->input->post('sk_number'),
+							'start_date' => $this->input->post('start_date'),
+							'expired_date' => $this->input->post('expired_date'),
+							'description' => $this->input->post('description'),
+							'path' => $path
+						)
+					);
+				}
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil diedit!</div>' );
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 }

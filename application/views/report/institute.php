@@ -2,19 +2,19 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-          
-        </div>
-        <div class="col-lg-6 col-5 text-right">
-          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
-            <span class="ni ni-fat-add"></span>
-            New
-          </a>');?>
-          <?= permission_export('
-          <a href="'.base_url('export/institute').'" class="btn btn-sm btn-neutral">
-            <span class="ni ni-send"></span>
-            Export
-          </a>');?>
+        <div class="col-lg-12 col-12">
+          <div class="card" style="margin: 0;">
+            <div class="card-body">
+              <form method="GET">
+                <div class="form-row">
+                  <div class="form-group col-md-4" style="margin-bottom:0">
+                    <?= permission_export('<a class="btn btn-outline-primary" href="'.base_url('export/institute/').'"><span class="ni ni-send"></span> Export</a>');?>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -73,53 +73,12 @@
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/institute/')
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('report/institute/?page=')
           )
         );?>
       </div>
     </div>
   </div>
-
-  <?= permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
-    <div class="modal-dialog modal- modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form method="POST" action="' . base_url('create/institute') . '" enctype="multipart/form-data">
-          <div class="modal-header">
-            <h6 class="modal-title" id="modal-title-default">Tambah Instansi</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Nomor Kode</label>
-              <input type="text" class="form-control" placeholder="Nomor Kode" name="code" id="code">
-                <div class="invalid-feedback w-100" id="forcode"></div>
-            </div>
-
-            <div class="form-group">
-              <label>Nama</label>
-              <input type="text" class="form-control" placeholder="Nama Instansi" name="name">
-            </div>
-
-            <div class="form-group">
-              <label>Alamat</label>
-              <textarea class="form-control" name="address" placeholder="Alamat"></textarea>
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>');?>
 
   <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered" role="document">
@@ -184,22 +143,5 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
-  });
-
-  $(document).on('change', '#code', function(e) {
-    e.preventDefault();
-    var val = $(this);
-    $.ajax({
-      url: "<?= base_url('validation/institute/');?>" + val.val(),
-    }).done(function(data) {
-      console.log(data);
-      if(data) {
-        $("#forcode").html(data);
-        val.attr('class', 'form-control is-invalid');
-      } else {
-        $("#forcode").html('');
-        val.attr('class', 'form-control');
-      }
-    });
   });
 </script>

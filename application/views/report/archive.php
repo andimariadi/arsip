@@ -2,19 +2,29 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-          
-        </div>
-        <div class="col-lg-6 col-5 text-right">
-          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
-            <span class="ni ni-fat-add"></span>
-            New
-          </a>');?>
-          <?= permission_export('
-          <a href="'.base_url('export/archive').'" class="btn btn-sm btn-neutral">
-            <span class="ni ni-send"></span>
-            Export
-          </a>');?>
+        <div class="col-lg-8 col-8">
+          <div class="card" style="margin: 0;">
+            <div class="card-body">
+              <form method="GET">
+                <div class="form-row">
+                  <div class="form-group col-md-4" style="margin-bottom:0">
+                    <label>Mulai Tanggal</label>
+                    <input type="date" class="form-control" name="start_date" placeholder="Mulai tanggal" value="<?=$start_date;?>">
+                  </div>
+                  <div class="form-group col-md-4" style="margin-bottom:0">
+                    <label>Sampai Tanggal</label>
+                    <input type="date" class="form-control" name="end_date" placeholder="Sampai tanggal" value="<?=$end_date;?>">
+                  </div>
+                  <div class="form-group col-md-4" style="margin-bottom:0">
+                    <label>&nbsp;</label><br/>
+                    <button class="btn btn-outline-primary" type="submit">Filter</button>
+                    <?= permission_export('<a class="btn btn-outline-primary" href="'.base_url('export/report_archive/?start_date='.$start_date.'&end_date='.$end_date).'"><span class="ni ni-send"></span> Export</a>');?>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -28,7 +38,7 @@
       <div class="card">
         <!-- Card header -->
         <div class="card-header border-0">
-          <h3 class="mb-0">Data Arsip</h3>
+          <h3 class="mb-0">Data Surat-Surat</h3>
         </div>
         <!-- Light table -->
         <div class="table-responsive">
@@ -79,60 +89,13 @@
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/archive/')
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('report/archive/?start_date='.$start_date.'&end_date='.$end_date.'&page=')
           )
         );?>
       </div>
     </div>
   </div>
 
-  
-
-  <?= permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
-    <div class="modal-dialog modal- modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form method="POST" action="' . base_url('create/archive') . '" enctype="multipart/form-data">
-          <div class="modal-header">
-            <h6 class="modal-title" id="modal-title-default">Tambah Arsip</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Nomor</label>
-              <input type="text" class="form-control" placeholder="Nomor" name="number" id="code">
-                <div class="invalid-feedback w-100" id="forcode"></div>
-            </div>
-
-            <div class="form-group">
-              <label>Judul</label>
-              <input type="text" class="form-control" placeholder="Nama Lengkap" name="title">
-            </div>
-
-            <div class="form-group">
-              <label>Keterangan</label>
-              <textarea name="description" id="editor" placeholder="Keterangan" class="form-control"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Dokumen</label>
-              <input type="file" class="form-control" name="document" />
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>');?>
 
   <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered" role="document">
@@ -150,7 +113,7 @@
           <input type="hidden" class="form-control" name="id" id="id" />
             <div class="form-group">
               <label>Nomor</label>
-              <input type="text" class="form-control" placeholder="Nomor" name="number">
+              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="number">
             </div>
 
             <div class="form-group">
@@ -200,22 +163,5 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
-  });
-
-  $(document).on('change', '#code', function(e) {
-    e.preventDefault();
-    var val = $(this);
-    $.ajax({
-      url: "<?= base_url('validation/archive/');?>" + val.val(),
-    }).done(function(data) {
-      console.log(data);
-      if(data) {
-        $("#forcode").html(data);
-        val.attr('class', 'form-control is-invalid');
-      } else {
-        $("#forcode").html('');
-        val.attr('class', 'form-control');
-      }
-    });
   });
 </script>

@@ -94,7 +94,7 @@
       <div class="modal-content">
         <form method="POST" action="' . base_url('create/sub_category') . '" enctype="multipart/form-data">
           <div class="modal-header">
-            <h6 class="modal-title" id="modal-title-default">Tambah Kategory</h6>
+            <h6 class="modal-title" id="modal-title-default">Tambah Sub Kategory</h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -112,7 +112,8 @@
 
             <div class="form-group">
               <label>Nomor Kode</label>
-              <input type="text" class="form-control" placeholder="Nomor Kode" name="code">
+              <input type="text" class="form-control" placeholder="Nomor Kode" name="code" id="code">
+                <div class="invalid-feedback w-100" id="forcode"></div>
             </div>
 
             <div class="form-group">
@@ -143,7 +144,7 @@
       <div class="modal-content">
         <form method="POST" action="' . base_url('update/sub_category') . '" enctype="multipart/form-data">
           <div class="modal-header">
-            <h6 class="modal-title" id="modal-title-default">Ubah Kategory</h6>
+            <h6 class="modal-title" id="modal-title-default">Ubah Sub Kategory</h6>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -210,5 +211,22 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
+  });
+
+  $(document).on('change', '#code', function(e) {
+    e.preventDefault();
+    var val = $(this);
+    $.ajax({
+      url: "<?= base_url('validation/sub_category/');?>" + val.val(),
+    }).done(function(data) {
+      console.log(data);
+      if(data) {
+        $("#forcode").html(data);
+        val.attr('class', 'form-control is-invalid');
+      } else {
+        $("#forcode").html('');
+        val.attr('class', 'form-control');
+      }
+    });
   });
 </script>

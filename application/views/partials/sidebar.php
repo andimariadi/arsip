@@ -25,7 +25,8 @@
             permission_menu_restrict('mail_inbox', 'true') != '' ||
             permission_menu_restrict('mail_outbox', 'true') != '' ||
             permission_menu_restrict('disposition', 'true') != '' ||
-            permission_menu_restrict('archive', 'true') != ''
+            permission_menu_restrict('archive', 'true') != '' ||
+            permission_menu_restrict('archive_sk', 'true') != ''
           ) : ?>
           <hr class="my-3">
           <h6 class="navbar-heading p-0 text-muted">
@@ -62,6 +63,12 @@
               <a class="nav-link" href="' . base_url('dash/archive') . '">
                 <i class="ni ni-collection text-warning"></i>
                 <span class="nav-link-text">Arsip surat</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('archive_sk', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/archive_sk') . '">
+                <i class="ni ni-collection text-danger"></i>
+                <span class="nav-link-text">Arsip surat SK</span>
               </a>
             </li>');?>
           </ul>
@@ -162,6 +169,36 @@
               <a class="nav-link" href="' . base_url('report/disposition') . '">
                 <i class="ni ni-bullet-list-67 text-danger"></i>
                 <span class="nav-link-text">Surat Disposisi</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_workers', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/workers') . '">
+                <i class="ni ni-bullet-list-67 text-yellow"></i>
+                <span class="nav-link-text">Karyawan</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_notice', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/notice') . '">
+                <i class="ni ni-bullet-list-67 text-default"></i>
+                <span class="nav-link-text">Pengunguman</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_institute', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/institute') . '">
+                <i class="ni ni-bullet-list-67 text-warning"></i>
+                <span class="nav-link-text">Instansi</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_archive', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/archive') . '">
+                <i class="ni ni-bullet-list-67 text-primary"></i>
+                <span class="nav-link-text">Arsip surat</span>
+              </a>
+            </li>');?>
+            <?= permission_menu_restrict('report_archive_sk', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('report/archive_sk') . '">
+                <i class="ni ni-bullet-list-67 text-info"></i>
+                <span class="nav-link-text">Arsip surat SK</span>
               </a>
             </li>');?>
           </ul>

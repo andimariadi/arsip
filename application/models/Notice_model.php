@@ -42,4 +42,28 @@ class Notice_model extends CI_Model
 		);
 		return $this->db->update('archive_public', $data);
 	}
+
+	public function getReport($start, $limit, $start_date, $end_date)
+	{
+		$this->db->where('deleted_at', NULL);
+		$this->db->where('date(archive_public.created_at) >=', $start_date);
+		$this->db->where('date(archive_public.created_at) <=', $end_date);
+		$this->db->limit($limit, $start);
+		return $this->db->get('archive_public');
+	}
+
+	public function getReportTotal($start_date, $end_date)
+	{
+		$this->db->where('deleted_at', NULL);
+		$this->db->where('date(archive_public.created_at) >=', $start_date);
+		$this->db->where('date(archive_public.created_at) <=', $end_date);
+		return $this->db->get('archive_public');
+	}
+
+	public function getAll()
+	{
+		$this->db->where('deleted_at', NULL);
+		$this->db->where(array('YEAR(archive_public.created_at)' => date('Y'), 'MONTH(archive_public.created_at)' => date('m')));
+		return $this->db->get('archive_public');
+	}
 }

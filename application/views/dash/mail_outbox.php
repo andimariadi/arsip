@@ -150,7 +150,8 @@
 
               <div class="form-group">
                 <label>Kode Surat</label>
-                <input type="text" class="form-control" placeholder="Kode Surat" name="code">
+                <input type="text" class="form-control" placeholder="Kode Surat" name="code" id="code">
+                <div class="invalid-feedback w-100" id="forcode"></div>
               </div>
 
             </div></div>
@@ -304,5 +305,22 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
+  });
+
+  $(document).on('change', '#code', function(e) {
+    e.preventDefault();
+    var val = $(this);
+    $.ajax({
+      url: "<?= base_url('validation/mail_outbox/');?>" + val.val(),
+    }).done(function(data) {
+      console.log(data);
+      if(data) {
+        $("#forcode").html(data);
+        val.attr('class', 'form-control is-invalid');
+      } else {
+        $("#forcode").html('');
+        val.attr('class', 'form-control');
+      }
+    });
   });
 </script>

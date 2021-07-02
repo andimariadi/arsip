@@ -146,6 +146,18 @@ class Export extends CI_Controller {
 		$this->load->view('export/institute', $data);
 	}
 
+	public function archive_sk()
+	{
+		permission_restrict('archive_sk');
+		
+		$this->load->model('Archives_sk_model', 'archives');
+
+		$data['data_archive'] = $this->archives->view()->result_array();
+		$data['start_date'] = date('Y-m-d');
+		$data['end_date'] = date('Y-m-d');
+		$this->load->view('export/archive_sk', $data);
+	}
+
 	public function report_mail_inbox()
 	{
 		permission_restrict('report_mail_inbox');
@@ -204,6 +216,48 @@ class Export extends CI_Controller {
 		$data['start_date'] = $start_date;
 		$data['end_date'] = $end_date;
 		$this->load->view('export/report_disposition', $data);
+	}
+
+	public function report_notice()
+	{
+		permission_restrict('report_notice');
+
+		$this->load->model('Notice_model', 'notice');
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+
+		$data['data_notice'] = $this->notice->getReportTotal($start_date, $end_date)->result_array();
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$this->load->view('export/report_notice', $data);
+	}
+
+	public function report_archive()
+	{
+		permission_restrict('report_archive');
+		
+		$this->load->model('Archives_model', 'archives');
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+
+		$data['data_archive'] = $this->archives->getReportTotal($start_date, $end_date)->result_array();
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$this->load->view('export/report_archive', $data);
+	}
+
+	public function report_archive_sk()
+	{
+		permission_restrict('report_archive_sk');
+		
+		$this->load->model('Archives_sk_model', 'archives');
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+
+		$data['data_archive'] = $this->archives->getReportTotal($start_date, $end_date)->result_array();
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$this->load->view('export/report_archive_sk', $data);
 	}
 }
 ?>

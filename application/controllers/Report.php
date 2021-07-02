@@ -116,4 +116,102 @@ class Report extends CI_Controller {
 		$data['end_date'] = $end_date;
 		$this->template->load('Surat Disposisi','report/disposition', $data);
 	}
+
+	public function archive()
+	{
+		permission_restrict('report_archive');
+		
+		$this->load->model('Archives_model', 'archives');
+
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+		
+		//pagging
+		$total = $this->archives->getReportTotal($start_date, $end_date)->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$data['data_archives'] = $this->archives->getReport($start, $this->per_page, $start_date, $end_date)->result_array();
+
+		$this->template->load('Arsip Surat','report/archive', $data);
+	}
+
+	public function archive_sk()
+	{
+		permission_restrict('report_archive_sk');
+		
+		$this->load->model('Archives_sk_model', 'archives');
+
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+		
+		//pagging
+		$total = $this->archives->getReportTotal($start_date, $end_date)->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$data['data_archives'] = $this->archives->getReport($start, $this->per_page, $start_date, $end_date)->result_array();
+
+		$this->template->load('Arsip Surat SK','report/archive_sk', $data);
+	}
+
+	public function workers()
+	{
+		permission_restrict('report_workers');
+
+		$this->load->model('Worker_model', 'worker');
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+
+		//pagging
+		$total = $this->worker->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_workers'] = $this->worker->getData($start, $this->per_page)->result_array();
+		$this->template->load('Karyawan','report/workers', $data);
+	}
+
+	public function notice()
+	{
+		permission_restrict('report_notice');
+
+		$this->load->model('Notice_model', 'notice');
+
+		$start_date = $this->input->get('start_date') == "" ? date("Y-m-d", strtotime('-7 day')) : $this->input->get('start_date');
+		$end_date = $this->input->get('end_date') == "" ? date("Y-m-d") : $this->input->get('end_date');
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+
+		//pagging
+		$total = $this->notice->getReportTotal($start_date, $end_date)->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['start_date'] = $start_date;
+		$data['end_date'] = $end_date;
+		$data['data_notice'] = $this->notice->getReport($start, $this->per_page, $start_date, $end_date)->result_array();
+		$this->template->load('Pengunguman','report/notice', $data);
+	}
+
+	public function institute()
+	{
+		permission_restrict('report_institute');
+
+		$this->load->model('Institute_model', 'institute');
+
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+
+		//pagging
+		$total = $this->institute->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_institute'] = $this->institute->getData($start, $this->per_page)->result_array();
+		$this->template->load('Institusi','report/institute', $data);
+	}
 }

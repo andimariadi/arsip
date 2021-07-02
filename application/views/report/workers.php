@@ -2,20 +2,19 @@
   <div class="container-fluid">
     <div class="header-body">
       <div class="row align-items-center py-4">
-        <div class="col-lg-6 col-7">
-          
-        </div>
-        
-        <div class="col-lg-6 col-5 text-right">
-          <?= permission_create('<a href="#" class="btn btn-sm btn-neutral" data-toggle="modal" data-target="#newModal">
-            <span class="ni ni-fat-add"></span>
-            New
-          </a>');?>
-          <?= permission_export('
-          <a href="'.base_url('export/workers').'" class="btn btn-sm btn-neutral">
-            <span class="ni ni-send"></span>
-            Export
-          </a>');?>
+        <div class="col-lg-12 col-12">
+          <div class="card" style="margin: 0;">
+            <div class="card-body">
+              <form method="GET">
+                <div class="form-row">
+                  <div class="form-group col-md-4" style="margin-bottom:0">
+                    <?= permission_export('<a class="btn btn-outline-primary" href="'.base_url('export/workers/').'"><span class="ni ni-send"></span> Export</a>');?>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +63,7 @@
                   <?= strtoupper($value['address']);?>
                 </td>
                 <td>
-                  <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="<?= $value['full_name'];?>">
+                  <a href="#" class="avatar avatar-sm rounded-circle" data-toggle="tooltip" data-original-title="Ryan Tompson">
                     <img alt="Image placeholder" src="<?= base_url($value['image']);?>">
                   </a>
                 </td>
@@ -86,71 +85,13 @@
         </div>
         <?php $this->template->pagging(
           array(
-            'page_total' => $page_total, 'page' => $page, 'url' => base_url('dash/workers/')
+            'page_total' => $page_total, 'page' => $page, 'url' => base_url('report/workers/?page=')
           )
         );?>
       </div>
     </div>
   </div>
 
-  <?= permission_create('<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal" aria-hidden="true">
-    <div class="modal-dialog modal- modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <form method="POST" action="' . base_url('create/workers') . '" enctype="multipart/form-data">
-          <div class="modal-header">
-            <h6 class="modal-title" id="modal-title-default">Tambah Karyawan</h6>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label>NIK</label>
-              <input type="text" class="form-control" placeholder="Nomor Induk Kependudukan" name="nik" id="nik">
-                <div class="invalid-feedback w-100" id="fornik"></div>
-            </div>
-
-            <div class="form-group">
-              <label>Nama Lengkap</label>
-              <input type="text" class="form-control" placeholder="Nama Lengkap" name="full_name">
-            </div>
-
-            <div class="form-group">
-              <label>Jenis Kelamin</label>
-              <select class="form-control" name="gender">
-                <option value="laki-laki">Laki-laki</option>
-                <option value="perempuan">Perempuan</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Nomor Handphone</label>
-              <input type="text" class="form-control" placeholder="Nomor Handphone" name="telp">
-            </div>
-
-            <div class="form-group">
-              <label>Alamat Lengkap</label>
-              <textarea class="form-control" name="address" placeholder="Alamat lengkap"></textarea>
-            </div>
-
-            <div class="form-group">
-              <label>Gambar</label>
-              <input type="file" class="form-control" name="image" />
-            </div>
-
-          </div>
-
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal">Close</button>
-          </div>
-        </form>
-
-      </div>
-    </div>
-  </div>');?>
 
   <?= permission_update('<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
     <div class="modal-dialog modal- modal-dialog-centered" role="document">
@@ -244,22 +185,5 @@
     var id = button.data('id');
     var modal = $(this);
     modal.find('.modal-body input[name=id]').val(id)
-  });
-
-  $(document).on('change', '#nik', function(e) {
-    e.preventDefault();
-    var val = $(this);
-    $.ajax({
-      url: "<?= base_url('validation/workers/');?>" + val.val(),
-    }).done(function(data) {
-      console.log(data);
-      if(data) {
-        $("#fornik").html(data);
-        val.attr('class', 'form-control is-invalid');
-      } else {
-        $("#fornik").html('');
-        val.attr('class', 'form-control');
-      }
-    });
   });
 </script>

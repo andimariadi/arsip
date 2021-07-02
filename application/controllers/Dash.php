@@ -234,4 +234,19 @@ class Dash extends CI_Controller {
 		$data['data_institute'] = $this->institute->view()->result_array();
 		$this->template->load('Buku Tamu','dash/guest_book', $data);
 	}
+
+	public function archive_sk($page = 1)
+	{
+		permission_restrict('archive_sk');
+		
+		$this->load->model('Archives_sk_model', 'archives');
+		//pagging
+		$total = $this->archives->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_archives'] = $this->archives->getData($start, $this->per_page)->result_array();
+
+		$this->template->load('Arsip Surat SK','dash/archive_sk', $data);
+	}
 }
