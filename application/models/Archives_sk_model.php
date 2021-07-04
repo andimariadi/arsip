@@ -53,8 +53,10 @@ class Archives_sk_model extends CI_Model
 	public function getReport($start, $limit, $start_date, $end_date)
 	{
 		$this->db->where('deleted_at', NULL);
-		$this->db->where('archives_sk.start_date >=', $start_date);
-		$this->db->where('archives_sk.start_date <=', $end_date);
+		$this->db->group_start();
+		$this->db->where('archives_sk.expired_date >=', $start_date);
+		$this->db->or_where('archives_sk.expired_date >=', $end_date);
+		$this->db->group_end();
 		$this->db->limit($limit, $start);
 		return $this->db->get('archives_sk');
 	}
@@ -62,8 +64,10 @@ class Archives_sk_model extends CI_Model
 	public function getReportTotal($start_date, $end_date)
 	{
 		$this->db->where('deleted_at', NULL);
-		$this->db->where('archives_sk.start_date >=', $start_date);
-		$this->db->where('archives_sk.start_date <=', $end_date);
+		$this->db->group_start();
+		$this->db->where('archives_sk.expired_date >=', $start_date);
+		$this->db->or_where('archives_sk.expired_date >=', $end_date);
+		$this->db->group_end();
 		return $this->db->get('archives_sk');
 	}
 
