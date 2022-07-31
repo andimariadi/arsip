@@ -130,6 +130,12 @@
                 <span class="nav-link-text">Instansi</span>
               </a>
             </li>');?>
+            <?= permission_menu_restrict('instructions', '<li class="nav-item">
+              <a class="nav-link" href="' . base_url('dash/instructions') . '">
+                <i class="ni ni-air-baloon text-warning"></i>
+                <span class="nav-link-text">Bantuan</span>
+              </a>
+            </li>');?>
           </ul>
 
           <?php if(
@@ -201,6 +207,19 @@
                 <span class="nav-link-text">Arsip surat SK</span>
               </a>
             </li>');?>
+            
+          </ul>
+          <hr class="my-3">
+          <h6 class="navbar-heading p-0 text-muted">
+            <span class="docs-normal">Intruction</span>
+          </h6>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="<?= base_url('report/instructions');?>">
+                <i class="ni ni-air-baloon text-warning"></i>
+                <span class="nav-link-text">Bantuan</span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

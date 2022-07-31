@@ -214,4 +214,28 @@ class Report extends CI_Controller {
 		$data['data_institute'] = $this->institute->getData($start, $this->per_page)->result_array();
 		$this->template->load('Institusi','report/institute', $data);
 	}
+
+	public function instructions()
+	{
+		permission_restrict('report_instructions');
+
+		$this->load->model('Instructions_model', 'instructions');
+
+		$page = $this->input->get('page') == "" ? 1 : $this->input->get('page');
+		$detail = $this->input->get('detail') == "" ? "" : $this->input->get('detail');
+
+		//pagging
+		
+		if($detail) {
+			$data['data_instructions'] = $this->instructions->where(['id' => $detail])->row_array();
+			$this->template->load('Data Bantuan','report/instructions_detail', $data);
+		} else {
+			$total = $this->instructions->view()->num_rows();
+			$start = ($page - 1) * $this->per_page;
+			$data['page_total'] =  ceil($total / $this->per_page);
+			$data['page'] = $page;
+			$data['data_instructions'] = $this->instructions->getData($start, $this->per_page)->result_array();
+			$this->template->load('Data Bantuan','report/instructions', $data);
+		}
+	}
 }

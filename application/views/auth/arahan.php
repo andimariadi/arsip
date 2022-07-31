@@ -25,25 +25,25 @@
           <div class="card bg-secondary border-0 mb-0">
             <div class="card-body px-lg-5 py-lg-5">
 
-              <h1><?= $data_descsubcategory['subcategory_description'];?></h1>
+              <h1><?= @$data_descsubcategory['subcategory_description'];?></h1>
               <div>
-                <?= $data_descsubcategory['remark'];?>
+                <?= @$data_descsubcategory['remark'];?>
               </div>
 
               <hr />
               <div class="row">
                 <div class="col-md-4">Petugas</div>
-                <div class="col-md-8">: <?= $data_descsubcategory['full_name'];?></div>
+                <div class="col-md-8">: <?= @$data_descsubcategory['full_name'];?></div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-md-4">Ruangan</div>
-                <div class="col-md-8">: <?= $data_descsubcategory['area'];?></div>
+                <div class="col-md-8">: <?= @$data_descsubcategory['area'];?></div>
               </div>
               <hr />
               <div class="row">
                 <div class="col-md-4">Estimasi Pengerjaan</div>
-                <div class="col-md-8">: <?= $data_descsubcategory['time_minutes'];?> menit</div>
+                <div class="col-md-8">: <?= @$data_descsubcategory['time_minutes'];?> menit</div>
               </div>
             </div>
 

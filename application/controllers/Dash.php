@@ -249,4 +249,19 @@ class Dash extends CI_Controller {
 
 		$this->template->load('Arsip Surat SK','dash/archive_sk', $data);
 	}
+
+	public function instructions($page = 1)
+	{
+		permission_restrict('instructions');
+		
+		$this->load->model('Instructions_model', 'instructions');
+		//pagging
+		$total = $this->instructions->view()->num_rows();
+		$start = ($page - 1) * $this->per_page;
+		$data['page_total'] =  ceil($total / $this->per_page);
+		$data['page'] = $page;
+		$data['data_instructions'] = $this->instructions->getData($start, $this->per_page)->result_array();
+
+		$this->template->load('Data Bantuan','dash/instructions', $data);
+	}
 }

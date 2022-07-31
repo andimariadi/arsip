@@ -25,6 +25,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-5 col-md-7">
           <div class="card bg-secondary border-0 mb-0">
+            <img src="<?= base_url('assets/img/notice.jpg');?>" width="100%" />
             <div class="card-body px-lg-5 py-lg-5">
               <?= $this->session->flashdata('msg');?>
               <form role="form" method="POST" action="<?= base_url('auth/action_visitor');?>">

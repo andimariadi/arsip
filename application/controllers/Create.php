@@ -3,9 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Create extends CI_Controller {
 
-	private $per_page = 1;
+	private $by_user;
 	function __construct() {
 		parent::__construct();
+		$this->by_user 	= $this->session->userdata('id');
 		$username 	= $this->session->userdata('username');
 		if (!$username) {
 			redirect(base_url('Auth'));
@@ -91,6 +92,7 @@ class Create extends CI_Controller {
 							'telp' => $this->input->post('telp'),
 							'address' => $this->input->post('address'),
 							'image' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 						
@@ -137,6 +139,7 @@ class Create extends CI_Controller {
 						'code' => $this->input->post('code'),
 						'name' => $this->input->post('name'),
 						'remark' => $this->input->post('remark'),
+						'by_user' => $this->by_user
 					)
 				);
 				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -168,6 +171,7 @@ class Create extends CI_Controller {
 						'code' => $this->input->post('code'),
 						'name' => $this->input->post('name'),
 						'remark' => $this->input->post('remark'),
+						'by_user' => $this->by_user
 					)
 				);
 				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -214,7 +218,8 @@ class Create extends CI_Controller {
 							'title' => $this->input->post('title'),
 							'description' => $this->input->post('description'),
 							'expired_at' => $this->input->post('expired_at'),
-							'path' => $path
+							'path' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -249,6 +254,7 @@ class Create extends CI_Controller {
 						'area' => $this->input->post('area'),
 						'user' => $this->input->post('user'),
 						'time_minutes' => $this->input->post('time_minutes'),
+						'by_user' => $this->by_user
 					)
 				);
 				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -277,6 +283,7 @@ class Create extends CI_Controller {
 						'code' => $this->input->post('code'),
 						'name' => $this->input->post('name'),
 						'address' => $this->input->post('address'),
+						'by_user' => $this->by_user
 					)
 				);
 				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -328,7 +335,8 @@ class Create extends CI_Controller {
 							'code' => $this->input->post('code'),
 							'number' => $this->input->post('number'),
 							'about' => $this->input->post('about'),
-							'document' => $path
+							'document' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -381,7 +389,8 @@ class Create extends CI_Controller {
 							'code' => $this->input->post('code'),
 							'number' => $this->input->post('number'),
 							'about' => $this->input->post('about'),
-							'document' => $path
+							'document' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -419,6 +428,7 @@ class Create extends CI_Controller {
 						'address' => $this->input->post('address'),
 						'utility' => $this->input->post('utility'),
 						'institute_id' => $this->input->post('institute_id'),
+						'by_user' => $this->by_user
 					)
 				);
 			}
@@ -461,7 +471,8 @@ class Create extends CI_Controller {
 							'number' => $this->input->post('number'),
 							'title' => $this->input->post('title'),
 							'description' => $this->input->post('description'),
-							'path' => $path
+							'path' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
@@ -520,6 +531,7 @@ class Create extends CI_Controller {
 							'about' => $this->input->post('about'),
 							'purpose' => $this->input->post('purpose'),
 							'remark' => $this->input->post('remark'),
+							'by_user' => $this->by_user
 						)
 					);
 				}else{
@@ -543,7 +555,8 @@ class Create extends CI_Controller {
 							'about' => $this->input->post('about'),
 							'purpose' => $this->input->post('purpose'),
 							'remark' => $this->input->post('remark'),
-							'path' => $path
+							'path' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 				}
@@ -597,11 +610,39 @@ class Create extends CI_Controller {
 							'start_date' => $this->input->post('start_date'),
 							'expired_date' => $this->input->post('expired_date'),
 							'description' => $this->input->post('description'),
-							'path' => $path
+							'path' => $path,
+							'by_user' => $this->by_user
 						)
 					);
 					$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
 				}
+			}
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function instructions()
+	{
+		$this->load->model('Instructions_model', 'instructions');
+		$this->form_validation->set_rules('title', 'Title', 'required');
+		$this->form_validation->set_rules('description', 'description', 'required');
+		if( $this->form_validation->run() != false ) {
+			$check_data = $this->instructions->where( array('title' => $this->input->post('title') ) );
+			if ($check_data->num_rows() > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> Title sudah ada!</div>' );
+			} else {
+				$this->instructions->create(
+					array(
+						'created_at' => date('Y-m-d H:i:s'),
+						'updated_at' => date('Y-m-d H:i:s'),
+						'title' => $this->input->post('title'),
+						'description' => $this->input->post('description'),
+					)
+				);
+				$this->session->set_flashdata('msg', '<div class="alert alert-success" role="alert"> <strong>Success!</strong> Data berhasil ditambahkan!</div>' );
 			}
 		} else {
 			$this->session->set_flashdata('msg', '<div class="alert alert-danger" role="alert"> <strong>Error!</strong> ' . str_replace(array('<p>', '</p>'), '',  validation_errors() ) . ' </div>' );

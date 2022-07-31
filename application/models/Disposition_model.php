@@ -5,6 +5,11 @@ class Disposition_model extends CI_Model
 {
 	public function view()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where(array('YEAR(disposition.date)' => date('Y'), 'MONTH(disposition.date)' => date('m')));
 		return $this->db->get('disposition');
@@ -12,6 +17,11 @@ class Disposition_model extends CI_Model
 
 	public function getData($start, $limit)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->select('disposition.*, institute.name as institute_description, subcategory.name as subcategory_description');
 		$this->db->join('institute', 'institute.id = disposition.institute_id', 'left');
 		$this->db->join('subcategory', 'subcategory.id = disposition.subcategory_id', 'left');	
@@ -23,6 +33,11 @@ class Disposition_model extends CI_Model
 
 	public function where($where = array())
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where($where);
 		return $this->db->get('disposition');
@@ -50,6 +65,11 @@ class Disposition_model extends CI_Model
 
 	public function getReport($start, $limit, $start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->select('disposition.*, institute.name as institute_description, subcategory.name as subcategory_description');
 		$this->db->join('institute', 'institute.id = disposition.institute_id', 'left');
 		$this->db->join('subcategory', 'subcategory.id = disposition.subcategory_id', 'left');	
@@ -62,6 +82,11 @@ class Disposition_model extends CI_Model
 
 	public function getReportTotal($start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->select('disposition.*, institute.name as institute_description, subcategory.name as subcategory_description');
 		$this->db->join('institute', 'institute.id = disposition.institute_id', 'left');
 		$this->db->join('subcategory', 'subcategory.id = disposition.subcategory_id', 'left');	
@@ -73,6 +98,11 @@ class Disposition_model extends CI_Model
 
 	public function getAll()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('disposition.by_user', $by_user);
+			
 		$this->db->select('disposition.*, institute.name as institute_description, subcategory.name as subcategory_description');
 		$this->db->join('institute', 'institute.id = disposition.institute_id', 'left');
 		$this->db->join('subcategory', 'subcategory.id = disposition.subcategory_id', 'left');	

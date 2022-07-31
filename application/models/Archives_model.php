@@ -5,12 +5,22 @@ class Archives_model extends CI_Model
 {
 	public function view()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+
 		$this->db->where('deleted_at', NULL);
 		return $this->db->get('archives');
 	}
 
 	public function viewThisMonth()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+
 		$this->db->where('deleted_at', NULL);
 		$this->db->where(array('YEAR(archives.created_at)' => date('Y'), 'MONTH(archives.created_at)' => date('m')));
 		return $this->db->get('archives');
@@ -18,6 +28,11 @@ class Archives_model extends CI_Model
 
 	public function getData($start, $limit)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->limit($limit, $start);
 		return $this->db->get('archives');
@@ -25,6 +40,11 @@ class Archives_model extends CI_Model
 
 	public function where($where = array())
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where($where);
 		return $this->db->get('archives');
@@ -52,6 +72,11 @@ class Archives_model extends CI_Model
 
 	public function getReport($start, $limit, $start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where('date(archives.created_at) >=', $start_date);
 		$this->db->where('date(archives.created_at) <=', $end_date);
@@ -61,6 +86,11 @@ class Archives_model extends CI_Model
 
 	public function getReportTotal($start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where('date(archives.created_at) >=', $start_date);
 		$this->db->where('date(archives.created_at) <=', $end_date);
@@ -69,6 +99,11 @@ class Archives_model extends CI_Model
 
 	public function getAll()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('archives.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where(array('YEAR(archives.created_at)' => date('Y'), 'MONTH(archives.created_at)' => date('m')));
 		return $this->db->get('archives');

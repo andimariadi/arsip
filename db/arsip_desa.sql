@@ -175,6 +175,21 @@ CREATE TABLE `institute` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `instructions`
+--
+  
+CREATE TABLE `instructions` (
+  `id` int(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `title` text NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `mail_inbox`
 --
 
@@ -386,6 +401,12 @@ ALTER TABLE `worker`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `instructions`
+--
+ALTER TABLE `instructions`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -471,6 +492,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
+  
+--
+-- AUTO_INCREMENT for table `instructions`
+--
+ALTER TABLE `instructions`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 

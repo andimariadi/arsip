@@ -5,6 +5,11 @@ class Inbox_model extends CI_Model
 {
 	public function view()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->where('mail_inbox.deleted_at', NULL);
 		$this->db->where(array('YEAR(mail_inbox.date)' => date('Y'), 'MONTH(mail_inbox.date)' => date('m')));
 		return $this->db->get('mail_inbox');
@@ -12,12 +17,22 @@ class Inbox_model extends CI_Model
 
 	public function viewAll()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->where('mail_inbox.deleted_at', NULL);
 		return $this->db->get('mail_inbox');
 	}
 
 	public function getData($start, $limit)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->select('mail_inbox.*, institute.name as institute_description, subcategory.name as category_description');
 		$this->db->join('subcategory', 'subcategory.id = mail_inbox.category_id', 'left');
 		$this->db->join('institute', 'institute.id = mail_inbox.institute_id', 'left');
@@ -29,6 +44,11 @@ class Inbox_model extends CI_Model
 
 	public function where($where = array())
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->where('deleted_at', NULL);
 		$this->db->where($where);
 		return $this->db->get('mail_inbox');
@@ -56,6 +76,11 @@ class Inbox_model extends CI_Model
 
 	public function getReport($start, $limit, $start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->select('mail_inbox.*, institute.name as institute_description, subcategory.name as category_description');
 		$this->db->join('subcategory', 'subcategory.id = mail_inbox.category_id', 'left');
 		$this->db->join('institute', 'institute.id = mail_inbox.institute_id', 'left');
@@ -68,6 +93,11 @@ class Inbox_model extends CI_Model
 
 	public function getReportTotal($start_date, $end_date)
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->select('mail_inbox.*, institute.name as institute_description, subcategory.name as category_description');
 		$this->db->join('subcategory', 'subcategory.id = mail_inbox.category_id', 'left');
 		$this->db->join('institute', 'institute.id = mail_inbox.institute_id', 'left');
@@ -79,6 +109,11 @@ class Inbox_model extends CI_Model
 
 	public function getAll()
 	{
+		$level = $this->session->userdata('level');
+		$by_user = $this->session->userdata('id');
+		if($level != 'administrator')
+			$this->db->where('mail_inbox.by_user', $by_user);
+			
 		$this->db->select('mail_inbox.*, institute.name as institute_description, subcategory.name as category_description');
 		$this->db->join('subcategory', 'subcategory.id = mail_inbox.category_id', 'left');
 		$this->db->join('institute', 'institute.id = mail_inbox.institute_id', 'left');

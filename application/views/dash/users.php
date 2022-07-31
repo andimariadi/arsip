@@ -246,6 +246,7 @@
                 <option value="description_category">Arahan</option>
                 <option value="archive">Arsip surat</option>
                 <option value="archive_sk">Arsip SK</option>
+                <option value="instructions">Bantuan</option>
                 <option value="guest_book">Buku Tamu</option>
                 <option value="disposition">Disposisi</option>
                 <option value="institute">Instansi</option>
